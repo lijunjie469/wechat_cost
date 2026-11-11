@@ -30,3 +30,6 @@ preview-qr.png
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# ---------- 临时截图 ----------
+screenshot_*.png
