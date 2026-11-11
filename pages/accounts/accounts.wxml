@@ -1,0 +1,66 @@
+<view class="assets">
+  <view class="alabel">总资产（{{accounts.length}} 个账户）</view>
+  <view class="aval">¥{{total}}</view>
+  <view class="atip">余额 = 初始余额 + 收入 − 支出 ± 转账</view>
+</view>
+
+<view class="card">
+  <view class="arow" wx:for="{{accounts}}" wx:key="id" data-id="{{item.id}}" bindtap="onAccountTap" hover-class="arow-hover">
+    <view class="aicon">{{item.icon}}</view>
+    <view class="amain">
+      <view class="aname">{{item.name}}<text wx:if="{{item.id === defaultId}}" class="atag">默认</text></view>
+      <view class="ainit">初始 ¥{{item.initText}}</view>
+    </view>
+    <view class="abal {{item.negative ? 'neg' : ''}}">¥{{item.balance}}</view>
+    <view class="amore">›</view>
+  </view>
+</view>
+
+<view class="addbtn" bindtap="toggleAdd" hover-class="addbtn-hover">
+  {{showAdd ? '收起' : '＋ 新增账户'}}
+</view>
+
+<view class="card pad" wx:if="{{showAdd}}">
+  <view class="frow">
+    <text class="flabel">图标</text>
+    <picker range="{{icons}}" value="{{iconIndex}}" bindchange="onIcon">
+      <view class="fval">{{icons[iconIndex]}} ›</view>
+    </picker>
+  </view>
+  <view class="frow bt">
+    <text class="flabel">名称</text>
+    <input class="finput" placeholder="如 招商银行 / 零钱通" value="{{newName}}" bindinput="onNewName" maxlength="8" />
+  </view>
+  <view class="savebtn small" bindtap="addAccount" hover-class="savebtn-hover">添加账户</view>
+</view>
+
+<view class="section">账户间转账</view>
+<view class="card pad">
+  <view class="frow">
+    <text class="flabel">从</text>
+    <picker range="{{names}}" value="{{fromIndex}}" bindchange="onFrom">
+      <view class="fval">{{names[fromIndex] || '选择账户'}} ›</view>
+    </picker>
+  </view>
+  <view class="frow bt">
+    <text class="flabel">到</text>
+    <picker range="{{names}}" value="{{toIndex}}" bindchange="onTo">
+      <view class="fval">{{names[toIndex] || '选择账户'}} ›</view>
+    </picker>
+  </view>
+  <view class="frow bt">
+    <text class="flabel">金额</text>
+    <input class="finput" type="digit" placeholder="0.00" value="{{amountStr}}" bindinput="onAmount" />
+  </view>
+  <view class="frow bt">
+    <text class="flabel">日期</text>
+    <picker mode="date" value="{{date}}" bindchange="onDate">
+      <view class="fval">{{date}} ›</view>
+    </picker>
+  </view>
+  <view class="frow bt">
+    <text class="flabel">备注</text>
+    <input class="finput" placeholder="可选" value="{{note}}" bindinput="onNote" maxlength="20" />
+  </view>
+  <view class="savebtn" bindtap="submitTransfer" hover-class="savebtn-hover">确认转账</view>
+</view>

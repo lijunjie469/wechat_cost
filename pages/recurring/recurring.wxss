@@ -1,0 +1,153 @@
+.banner {
+  margin: 24rpx;
+  background: #EAF9F0;
+  border-radius: 20rpx;
+  padding: 24rpx 28rpx;
+}
+.btitle {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #06803F;
+}
+.bdesc {
+  font-size: 22rpx;
+  color: #3C7A5A;
+  margin-top: 8rpx;
+  line-height: 1.6;
+}
+
+.section {
+  margin: 24rpx 32rpx 12rpx;
+  font-size: 24rpx;
+  color: #9AA0A6;
+}
+
+.card {
+  background: #FFFFFF;
+  margin: 0 24rpx 16rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+.card.pad {
+  padding: 8rpx 28rpx 24rpx;
+}
+
+.trow {
+  display: flex;
+  align-items: center;
+  padding: 22rpx 24rpx;
+}
+.trow.bt {
+  border-top: 1rpx solid #F0F1F3;
+}
+.ticon {
+  width: 66rpx;
+  height: 66rpx;
+  background: #F6F7F9;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 66rpx;
+  font-size: 32rpx;
+  margin-right: 18rpx;
+}
+.tmain {
+  flex: 1;
+  min-width: 0;
+}
+.ttop {
+  display: flex;
+  justify-content: space-between;
+}
+.tname {
+  font-size: 27rpx;
+}
+.tamt {
+  font-size: 27rpx;
+  font-weight: 600;
+}
+.tamt.income {
+  color: #E64340;
+}
+.tsub {
+  font-size: 20rpx;
+  color: #9AA0A6;
+  margin-top: 4rpx;
+}
+.tright {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 14rpx;
+}
+.tdel {
+  font-size: 20rpx;
+  color: #E64340;
+  margin-top: 2rpx;
+}
+
+.toggle {
+  display: flex;
+  background: #F6F7F9;
+  border-radius: 14rpx;
+  padding: 6rpx;
+  margin: 16rpx 0 8rpx;
+}
+.tbtn {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  font-size: 26rpx;
+  color: #5A5E66;
+  border-radius: 10rpx;
+}
+.tbtn.on {
+  background: #07C160;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.frow {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+}
+.frow.bt {
+  border-top: 1rpx solid #F0F1F3;
+}
+.flabel {
+  width: 90rpx;
+  color: #5A5E66;
+  font-size: 26rpx;
+}
+.finput {
+  flex: 1;
+  font-size: 28rpx;
+}
+.fval {
+  font-size: 28rpx;
+}
+.funit {
+  color: #9AA0A6;
+  font-size: 24rpx;
+  margin-left: 8rpx;
+}
+
+.savebtn {
+  margin-top: 24rpx;
+  background: #07C160;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.ghost {
+  text-align: center;
+  padding: 20rpx;
+  color: #5A5E66;
+  font-size: 24rpx;
+}
+.btn-hover {
+  opacity: 0.85;
+}

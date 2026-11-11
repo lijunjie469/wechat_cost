@@ -1,0 +1,63 @@
+plugins {
+    id 'com.android.application'
+}
+
+// 签名信息从 signing.properties / local.properties 读取（两者都不进 git，避免密钥密码泄露）
+def localProps = new Properties()
+[file('../signing.properties'), file('../local.properties')].each { f ->
+    if (f.exists()) {
+        f.withInputStream { localProps.load(it) }
+    }
+}
+
+android {
+    namespace 'com.muzi.jizhang'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.muzi.jizhang"
+        minSdk 24
+        targetSdk 35
+        versionCode 16
+        versionName "1.1.5"
+    }
+
+    signingConfigs {
+        // 生成可直接安装的 APK（非商店分发）；缺配置时回退到 debug 签名
+        release {
+            if (localProps.getProperty('RELEASE_STORE_FILE')) {
+                storeFile rootProject.file(localProps.getProperty('RELEASE_STORE_FILE'))
+                storePassword localProps.getProperty('RELEASE_STORE_PASSWORD')
+                keyAlias localProps.getProperty('RELEASE_KEY_ALIAS')
+                keyPassword localProps.getProperty('RELEASE_KEY_PASSWORD')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig localProps.getProperty('RELEASE_STORE_FILE') ? signingConfigs.release : signingConfigs.debug
+        }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // 这些扩展名的文件在 assets 里不要压缩，方便直接读取
+    androidResources {
+        noCompress 'csv', 'json', 'xlsx'
+    }
+
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/*.kotlin_module']
+        }
+    }
+}

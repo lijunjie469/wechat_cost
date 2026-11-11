@@ -1,0 +1,107 @@
+<view class="page">
+  <!-- 说明 -->
+  <view class="hint card">
+    <view class="htitle">怎么拿到账单文件</view>
+    <view class="hline">1. 微信 → 我 → 服务 → 钱包 → 账单</view>
+    <view class="hline">2. 右上角「常见问题」→ 下载账单 → 用于个人对账</view>
+    <view class="hline">3. 选时间范围 → 填邮箱 → 收到账单文件（解压密码在微信消息里）</view>
+    <view class="hline">4. 把账单文件（xlsx / csv / docx）发到「文件传输助手」，回来点下面的按钮选择它；电脑上也可以直接粘贴 CSV 文本</view>
+  </view>
+
+  <!-- 入口 1：从聊天记录选择文件 -->
+  <view class="card">
+    <view class="btn primary" bindtap="chooseFile" hover-class="btn-hover">从聊天记录选择账单文件</view>
+    <view class="filesub">支持 .xlsx（Excel）、.csv、.docx（Word 表格）；PDF 请先转成 Excel/CSV</view>
+    <view class="filetip" wx:if="{{fileName}}">已选：{{fileName}}</view>
+
+    <!-- 合并选项 -->
+    <view class="mergerow">
+      <view class="mergemain">
+        <view class="mergetitle">合并多份账单</view>
+        <view class="mergesub">开启后，再选一份账单会追加到当前预览，可把微信账单和银行流水合成一次导入；关闭则每次替换</view>
+      </view>
+      <switch checked="{{mergeMode}}" bindchange="onMergeChange" color="#07C160" />
+    </view>
+
+    <view class="divider"><text>或者</text></view>
+    <textarea
+      class="ta"
+      placeholder="把 CSV 内容整段粘贴到这里（表头需包含「交易时间」和「金额(元)」）"
+      value="{{text}}"
+      bindinput="onInput"
+      maxlength="-1"
+      auto-height
+    />
+    <view class="btn ghost" bindtap="parseText" hover-class="btn-hover">解析粘贴的文本</view>
+  </view>
+
+  <!-- 错误 -->
+  <view class="err card" wx:if="{{error}}">{{error}}</view>
+
+  <!-- 解析结果 -->
+  <block wx:if="{{parsed}}">
+    <view class="card">
+      <view class="stitle">解析结果</view>
+      <view class="stat">
+        <view class="sitem">
+          <view class="snum">{{parsed.stats.total}}</view>
+          <view class="slabel">账单行</view>
+        </view>
+        <view class="sitem">
+          <view class="snum ok">{{importCount}}</view>
+          <view class="slabel">可导入</view>
+        </view>
+        <view class="sitem">
+          <view class="snum">{{ignored}}</view>
+          <view class="slabel">忽略</view>
+        </view>
+      </view>
+
+      <!-- 已合并的文件 -->
+      <view class="filechips" wx:if="{{files.length > 0}}">
+        <view class="fctitle">{{files.length > 1 ? '已合并 ' + files.length + ' 份账单' : '当前账单'}}</view>
+        <view class="fcwrap">
+          <view class="fc" wx:for="{{files}}" wx:key="index">{{item.name}} · {{item.count}} 笔</view>
+        </view>
+      </view>
+
+      <view class="skipnote" wx:if="{{parsed.stats.refundNote}}">{{parsed.stats.refundNote}}</view>
+
+      <view class="skipnote" wx:if="{{!parsed.stats.bank && files.length > 1}}">
+        本批没有银行流水：各账单按自己的记录保留，互不合并
+      </view>
+
+      <view class="skipnote" wx:if="{{parsed.stats.crossMerged > 0}}">
+        已在 {{files.length}} 份账单之间合并 {{parsed.stats.crossMerged}} 笔重复交易，金额以银行流水为准，商户名取自微信/支付宝账单
+      </view>
+
+      <view class="skipnote" wx:if="{{ignored > 0}}">
+        忽略的包括「不计收支」（提现/还款等）、已退款、金额异常的记录
+      </view>
+
+      <view class="mergetip" wx:if="{{mergeMode}}">还想再并入一份？点下面按钮继续选文件，预览会累加。</view>
+      <view class="btn ghost" wx:if="{{mergeMode}}" bindtap="chooseFile" hover-class="btn-hover">＋ 再添加一份账单</view>
+    </view>
+
+    <view class="card">
+      <view class="stitle">预览（前 {{preview.length}} 条）</view>
+      <view wx:for="{{preview}}" wx:key="extId" class="prow {{index > 0 ? 'bt' : ''}}">
+        <view class="picon">{{item.icon}}</view>
+        <view class="pmain">
+          <view class="pcat">{{item.merchant}}</view>
+          <view class="pnote">{{item.date}} · {{item.catName}}</view>
+        </view>
+        <view class="pamt {{item.type}}">{{item.amountText}}</view>
+      </view>
+    </view>
+  </block>
+
+  <view class="bottompad"></view>
+</view>
+
+<!-- 底部操作 -->
+<view class="footer" wx:if="{{parsed}}">
+  <button class="savebtn" bindtap="doImport" disabled="{{importing}}">
+    {{importing ? '导入中…' : '确认导入 ' + importCount + ' 条'}}
+  </button>
+</view>

@@ -1,0 +1,53 @@
+<view class="monthbar">
+  <view class="mnav" bindtap="prevMonth">‹</view>
+  <view class="mcenter">
+    <view class="mtitle">{{monthTitle}}</view>
+    <view class="msub">支 ¥{{summary.expense}} · 收 ¥{{summary.income}}</view>
+  </view>
+  <view class="mnav" bindtap="nextMonth">›</view>
+</view>
+
+<view class="cal">
+  <view class="week">
+    <view class="wcell" wx:for="{{weekLabels}}" wx:key="*this">{{item}}</view>
+  </view>
+  <view class="grid">
+    <view
+      wx:for="{{cells}}"
+      wx:key="key"
+      class="cell {{item.blank ? 'blank' : ''}} {{item.today ? 'today' : ''}} {{item.date === selDate ? 'sel' : ''}}"
+      data-date="{{item.date}}"
+      bindtap="tapDay"
+    >
+      <block wx:if="{{!item.blank}}">
+        <view class="dnum">{{item.day}}</view>
+        <view class="dexp" wx:if="{{item.exp}}">{{item.exp}}</view>
+        <view class="dinc" wx:if="{{item.inc}}">+{{item.inc}}</view>
+      </block>
+    </view>
+  </view>
+</view>
+
+<view class="daybar">
+  <view class="dbdate">{{selDate}}</view>
+  <view class="dbsum">支 ¥{{selExpense}} · 收 ¥{{selIncome}}</view>
+  <view class="dblink" bindtap="goDayDetail">明细 ›</view>
+</view>
+
+<view wx:if="{{!selList.length}}" class="empty">
+  <view class="eicon">🗓️</view>
+  <view>这一天还没有记录</view>
+</view>
+
+<view wx:else class="card">
+  <view class="row {{idx > 0 ? 'bt' : ''}}" wx:for="{{selList}}" wx:key="id" wx:for-index="idx">
+    <view class="ricon">{{item.icon}}</view>
+    <view class="rmain">
+      <view class="rcat">{{item.name}}</view>
+      <view class="rnote" wx:if="{{item.note}}">{{item.note}}</view>
+    </view>
+    <view class="ramt {{item.type}}">{{item.amountText}}</view>
+  </view>
+</view>
+
+<view class="addhere" bindtap="goAdd" hover-class="addhere-hover">＋ 记一笔</view>

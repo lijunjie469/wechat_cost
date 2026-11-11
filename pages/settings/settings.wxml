@@ -1,0 +1,63 @@
+<view class="hero">
+  <view class="hnum">{{count}}</view>
+  <view class="hlabel">条账单 · {{accountCount}} 个账户</view>
+  <view class="hrange" wx:if="{{count}}">{{firstDate}} ~ {{lastDate}} · 跨 {{spanDays}} 天</view>
+</view>
+
+<view class="section">数据管理</view>
+<view class="card">
+  <view class="srow" bindtap="goAccounts" hover-class="srow-hover">
+    <text class="sicon">💳</text><text class="sname">账户与转账</text><text class="sarrow">›</text>
+  </view>
+  <view class="srow bt" bindtap="goBudget" hover-class="srow-hover">
+    <text class="sicon">🎯</text><text class="sname">预算管理</text><text class="sarrow">›</text>
+  </view>
+  <view class="srow bt" bindtap="goRecurring" hover-class="srow-hover">
+    <text class="sicon">🔁</text><text class="sname">周期账单</text><text class="sarrow">›</text>
+  </view>
+</view>
+
+<view class="section">备份与导出（本地存储，务必定期备份）</view>
+<view class="card pad">
+  <view class="brow">
+    <view class="bmain">
+      <view class="bname">导出 JSON 备份</view>
+      <view class="bsub">含全部账单与设置，约 {{jsonSize}} KB，复制到剪贴板</view>
+    </view>
+    <view class="bbtn" bindtap="exportJson" hover-class="btn-hover">导出</view>
+  </view>
+  <view class="brow bt">
+    <view class="bmain">
+      <view class="bname">导出 CSV 表格</view>
+      <view class="bsub">可用 Excel / WPS 打开做进一步分析</view>
+    </view>
+    <view class="bbtn" bindtap="exportCsv" hover-class="btn-hover">导出</view>
+  </view>
+  <view class="brow bt">
+    <view class="bmain">
+      <view class="bname">从备份恢复</view>
+      <view class="bsub">粘贴导出的 JSON，可合并或覆盖</view>
+    </view>
+    <view class="bbtn" bindtap="toggleImport" hover-class="btn-hover">{{showImport ? '收起' : '恢复'}}</view>
+  </view>
+
+  <block wx:if="{{showImport}}">
+    <textarea class="tarea" placeholder="把之前导出的 JSON 粘贴到这里…" value="{{importText}}" bindinput="onImportText" maxlength="-1" auto-height="{{false}}" />
+    <view class="trow">
+      <view class="ghostbtn" bindtap="pasteFromClipboard" hover-class="btn-hover">从剪贴板粘贴</view>
+      <view class="primarybtn" bindtap="doImport" hover-class="btn-hover">开始导入</view>
+    </view>
+  </block>
+</view>
+
+<view class="section">危险操作</view>
+<view class="card">
+  <view class="srow" bindtap="clearData" hover-class="srow-hover">
+    <text class="sicon">🗑️</text><text class="sname danger">清空所有账单</text><text class="sarrow">›</text>
+  </view>
+  <view class="srow bt" bindtap="resetSettings" hover-class="srow-hover">
+    <text class="sicon">↩️</text><text class="sname">恢复默认设置</text><text class="sarrow">›</text>
+  </view>
+</view>
+
+<view class="foot">数据只存在这台设备的小程序本地存储里，清理小程序缓存会一并删除，请养成定期导出备份的习惯。</view>

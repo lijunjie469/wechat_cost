@@ -1,0 +1,155 @@
+.wrap {
+  padding-bottom: 480rpx;
+}
+
+.toggle {
+  display: flex;
+  margin: 24rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 8rpx;
+}
+.tbtn {
+  flex: 1;
+  text-align: center;
+  padding: 18rpx 0;
+  border-radius: 12rpx;
+  color: #5A5E66;
+  font-size: 28rpx;
+}
+.tbtn.on {
+  background: #07C160;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.amount {
+  text-align: center;
+  padding: 24rpx 0 28rpx;
+  font-size: 72rpx;
+  font-weight: 700;
+}
+
+.cats {
+  display: flex;
+  flex-wrap: wrap;
+  background: #FFFFFF;
+  margin: 0 24rpx;
+  border-radius: 20rpx;
+  padding: 16rpx 0;
+}
+.cat {
+  width: 20%;
+  text-align: center;
+  padding: 18rpx 0;
+}
+.cicon {
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: 0 auto;
+  background: #F6F7F9;
+  border-radius: 50%;
+  font-size: 40rpx;
+}
+.cat.on .cicon {
+  background: #07C160;
+}
+.cname {
+  font-size: 22rpx;
+  color: #5A5E66;
+  margin-top: 8rpx;
+}
+.cat.on .cname {
+  color: #07C160;
+  font-weight: 600;
+}
+
+.meta {
+  margin: 16rpx 24rpx;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 0 32rpx;
+}
+.mrow {
+  display: flex;
+  align-items: center;
+  padding: 26rpx 0;
+}
+.mrow.bt {
+  border-top: 1rpx solid #F0F1F3;
+}
+.mlabel {
+  width: 110rpx;
+  color: #5A5E66;
+}
+.minput {
+  flex: 1;
+  font-size: 28rpx;
+}
+.mval {
+  color: #1A1A1A;
+}
+
+.del {
+  margin: 24rpx;
+  background: #FFFFFF;
+  color: #E64340;
+  text-align: center;
+  padding: 26rpx;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+}
+.del-hover {
+  background: #FDF0EF;
+}
+
+.pad {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #FFFFFF;
+  display: flex;
+  padding: 12rpx 12rpx calc(12rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 12rpx rgba(0, 0, 0, 0.04);
+  z-index: 10;
+}
+.keys {
+  flex: 3;
+  display: flex;
+  flex-wrap: wrap;
+}
+.key {
+  width: 33.33%;
+}
+.kin {
+  margin: 6rpx;
+  background: #F6F7F9;
+  border-radius: 12rpx;
+  text-align: center;
+  padding: 30rpx 0;
+  font-size: 42rpx;
+}
+.kin-hover {
+  background: #E4E6EA;
+}
+.savecol {
+  flex: 1;
+  display: flex;
+}
+.savebtn {
+  flex: 1;
+  margin: 6rpx;
+  background: #07C160;
+  color: #FFFFFF;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34rpx;
+  font-weight: 600;
+}
+.save-hover {
+  opacity: 0.85;
+}

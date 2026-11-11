@@ -1,0 +1,47 @@
+<view class="hero {{over ? 'over' : ''}}">
+  <view class="hlabel">{{month}} 预算执行</view>
+  <view class="hval">¥{{usedText}}<text class="hsub"> / {{hasBudget ? '¥' + totalInput : '未设置'}}</text></view>
+  <view class="hbar">
+    <view class="hfill {{over ? 'red' : ''}}" style="width: {{pct}}%;"></view>
+  </view>
+  <view class="hfoot">
+    <text wx:if="{{hasBudget && over}}">已超支 ¥{{overText}}</text>
+    <text wx:elif="{{hasBudget}}">剩余 ¥{{leftText}}</text>
+    <text wx:else>设个预算，超支会提醒你</text>
+    <text>{{pct}}%</text>
+  </view>
+</view>
+
+<view class="card">
+  <view class="crow">
+    <text class="clabel">每月总预算</text>
+    <input class="cinput" type="digit" placeholder="0" value="{{totalInput}}" bindinput="onTotal" />
+    <text class="cunit">元</text>
+  </view>
+  <view class="tiprow">
+    <text class="tip">预算对每个月都生效，可随时调整</text>
+    <view class="ghostbtn" bindtap="fillLastMonth" hover-class="ghostbtn-hover">参考上月</view>
+  </view>
+</view>
+
+<view class="section">分类预算（可选，超支会单独提醒）</view>
+<view class="card">
+  <view class="cbrow {{idx > 0 ? 'bt' : ''}}" wx:for="{{catRows}}" wx:key="id" wx:for-index="idx">
+    <view class="cbicon">{{item.icon}}</view>
+    <view class="cbmain">
+      <view class="cbtop">
+        <text class="cbname">{{item.name}}</text>
+        <text class="cbused">已用 ¥{{item.usedText}}<text wx:if="{{item.over}}" class="cbover"> 超支</text></text>
+      </view>
+      <view class="cbbar" wx:if="{{item.has}}">
+        <view class="cbfill {{item.over ? 'red' : ''}}" style="width: {{item.pct}}%;"></view>
+      </view>
+    </view>
+    <input class="cbinput" type="digit" placeholder="不限" value="{{item.budgetInput}}" data-id="{{item.id}}" bindinput="onCat" />
+  </view>
+</view>
+
+<view class="actions">
+  <view class="primary" bindtap="save" hover-class="btn-hover">保存预算</view>
+  <view class="ghost" bindtap="clearAll" hover-class="btn-hover">清除预算</view>
+</view>

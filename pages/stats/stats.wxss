@@ -1,0 +1,454 @@
+.monthbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 32rpx;
+}
+.mnav {
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 56rpx;
+  text-align: center;
+  font-size: 42rpx;
+  color: #07C160;
+  background: #FFFFFF;
+  border-radius: 50%;
+}
+.mtitle {
+  font-size: 34rpx;
+  font-weight: 600;
+}
+
+.toggle {
+  display: flex;
+  margin: 0 24rpx 16rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 8rpx;
+}
+.tbtn {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  border-radius: 12rpx;
+  color: #5A5E66;
+  font-size: 28rpx;
+}
+.tbtn.on {
+  background: #07C160;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.panel {
+  background: #FFFFFF;
+  margin: 0 24rpx 16rpx;
+  border-radius: 20rpx;
+  padding: 32rpx;
+  text-align: center;
+}
+.ptotal {
+  font-size: 40rpx;
+  font-weight: 700;
+}
+.psub {
+  color: #9AA0A6;
+  font-size: 24rpx;
+  margin-top: 8rpx;
+}
+.piewrap {
+  position: relative;
+  width: 380rpx;
+  height: 380rpx;
+  margin: 28rpx auto 0;
+}
+.pie {
+  width: 380rpx;
+  height: 380rpx;
+}
+.piecenter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.pclabel {
+  color: #9AA0A6;
+  font-size: 24rpx;
+}
+.pcval {
+  font-size: 34rpx;
+  font-weight: 700;
+  margin-top: 4rpx;
+}
+.pempty {
+  color: #9AA0A6;
+  padding: 60rpx 0 20rpx;
+  font-size: 26rpx;
+}
+
+.blist {
+  background: #FFFFFF;
+  margin: 0 24rpx 24rpx;
+  border-radius: 20rpx;
+  padding: 8rpx 32rpx;
+}
+.brow {
+  display: flex;
+  align-items: center;
+  padding: 22rpx 0;
+}
+.brow.bt {
+  border-top: 1rpx solid #F0F1F3;
+}
+.bicon {
+  width: 68rpx;
+  height: 68rpx;
+  background: #F6F7F9;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 68rpx;
+  font-size: 34rpx;
+  margin-right: 20rpx;
+}
+.bmain {
+  flex: 1;
+  min-width: 0;
+  margin-right: 20rpx;
+}
+.btop {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+}
+.bname {
+  font-size: 26rpx;
+}
+.bpct {
+  color: #9AA0A6;
+  font-size: 22rpx;
+}
+.bbar {
+  height: 12rpx;
+  background: #F0F1F3;
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+.bfill {
+  height: 12rpx;
+  border-radius: 6rpx;
+}
+.bsum {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+/* 顶部标签页 */
+.tabs {
+  display: flex;
+  margin: 0 24rpx 16rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 8rpx;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 14rpx 0;
+  font-size: 26rpx;
+  color: #5A5E66;
+  border-radius: 12rpx;
+}
+.tab.on {
+  background: rgba(7, 193, 96, 0.12);
+  color: #07C160;
+  font-weight: 600;
+}
+
+/* 通用块标题 */
+.ptitle {
+  font-size: 30rpx;
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: 8rpx;
+}
+.ptips {
+  text-align: left;
+  color: #9AA0A6;
+  font-size: 22rpx;
+  line-height: 1.6;
+  margin-bottom: 12rpx;
+}
+
+/* 交易对手列表 */
+.plist {
+  text-align: left;
+  margin-top: 8rpx;
+}
+.prow {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #F0F1F3;
+}
+.prow:last-child {
+  border-bottom: none;
+}
+.prank {
+  width: 44rpx;
+  color: #B0B4BA;
+  font-size: 22rpx;
+}
+.pmain {
+  flex: 1;
+  min-width: 0;
+}
+.ptop {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8rpx;
+}
+.pname {
+  font-size: 27rpx;
+  color: #2B2F33;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 60%;
+}
+.pname.sel {
+  color: #07C160;
+  font-weight: 600;
+}
+.pamt {
+  font-size: 27rpx;
+  font-weight: 600;
+}
+.pbar {
+  height: 12rpx;
+  background: #F2F3F5;
+  border-radius: 99rpx;
+  overflow: hidden;
+}
+.pfill {
+  height: 100%;
+  background: #FF8A65;
+  border-radius: 99rpx;
+}
+.pfill.in {
+  background: #07C160;
+}
+.pcount {
+  width: 88rpx;
+  text-align: right;
+  color: #9AA0A6;
+  font-size: 22rpx;
+}
+.prow.big {
+  padding: 14rpx 0;
+}
+.bicon2 {
+  width: 56rpx;
+  font-size: 30rpx;
+  text-align: center;
+}
+.psub {
+  color: #9AA0A6;
+  font-size: 22rpx;
+}
+
+/* 对手月度柱状 */
+.cols {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 300rpx;
+  padding-top: 16rpx;
+}
+.col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+.cval {
+  font-size: 18rpx;
+  color: #9AA0A6;
+  margin-bottom: 6rpx;
+  transform: scale(0.9);
+}
+.cbarwrap {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.cbar {
+  width: 36rpx;
+  background: linear-gradient(180deg, #4FC3F7, #29A3E0);
+  border-radius: 8rpx 8rpx 0 0;
+  min-height: 4rpx;
+}
+.clabel {
+  font-size: 20rpx;
+  color: #9AA0A6;
+  margin-top: 8rpx;
+}
+
+/* 金额区间 */
+.blist2 {
+  text-align: left;
+  margin-top: 12rpx;
+}
+.brow2 {
+  display: flex;
+  align-items: center;
+  padding: 10rpx 0;
+  font-size: 22rpx;
+}
+.brlabel {
+  width: 130rpx;
+  color: #5A5E66;
+}
+.brbar {
+  flex: 1;
+  height: 14rpx;
+  background: #F2F3F5;
+  border-radius: 99rpx;
+  overflow: hidden;
+  margin: 0 12rpx;
+}
+.brfill {
+  height: 100%;
+  background: #BA68C8;
+  border-radius: 99rpx;
+}
+.brpct {
+  width: 70rpx;
+  text-align: right;
+  color: #5A5E66;
+}
+.brsum {
+  width: 200rpx;
+  text-align: right;
+  color: #9AA0A6;
+  font-size: 20rpx;
+}
+
+/* 大额支出 */
+.bigrow {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  text-align: left;
+  margin: 8rpx 0 12rpx;
+}
+.biglabel {
+  font-size: 24rpx;
+  color: #5A5E66;
+}
+.thinput {
+  width: 140rpx;
+  height: 60rpx;
+  background: #F5F6F8;
+  border-radius: 12rpx;
+  padding: 0 16rpx;
+  font-size: 26rpx;
+  text-align: center;
+}
+.applybtn {
+  padding: 12rpx 24rpx;
+  background: #07C160;
+  color: #FFFFFF;
+  font-size: 24rpx;
+  border-radius: 12rpx;
+}
+
+/* 趋势 */
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  margin: 6rpx 0 18rpx;
+  font-size: 22rpx;
+  color: #5A5E66;
+}
+.dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 12rpx;
+}
+.dot.exp {
+  background: #07C160;
+}
+.dot.inc {
+  background: #E64340;
+}
+.legendnote {
+  margin-left: auto;
+  color: #9AA0A6;
+  font-size: 20rpx;
+}
+.cbars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 8rpx;
+  height: 240rpx;
+}
+.cbar2 {
+  width: 26rpx;
+  border-radius: 6rpx 6rpx 0 0;
+}
+.cbar2.exp {
+  background: #07C160;
+  opacity: 0.9;
+}
+.cbar2.inc {
+  background: #E64340;
+  opacity: 0.85;
+}
+.momrow {
+  display: flex;
+  gap: 18rpx;
+  margin: 10rpx 0 4rpx;
+}
+.momitem {
+  flex: 1;
+  background: #F7F8FA;
+  border-radius: 16rpx;
+  padding: 20rpx;
+}
+.momlabel {
+  font-size: 22rpx;
+  color: #9AA0A6;
+}
+.momval {
+  font-size: 32rpx;
+  font-weight: 700;
+  margin: 6rpx 0 2rpx;
+}
+.momsub {
+  font-size: 20rpx;
+  color: #9AA0A6;
+}
+.mompct {
+  font-size: 26rpx;
+  font-weight: 600;
+  margin-top: 8rpx;
+}
+.mompct.up,
+.mompct.bad {
+  color: #E64340;
+}
+.mompct.good {
+  color: #07C160;
+}

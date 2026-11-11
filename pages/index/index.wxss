@@ -1,0 +1,240 @@
+.monthbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 32rpx;
+}
+.mnav {
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 56rpx;
+  text-align: center;
+  font-size: 42rpx;
+  color: #07C160;
+  background: #FFFFFF;
+  border-radius: 50%;
+}
+.mcenter {
+  text-align: center;
+}
+.mtitle {
+  font-size: 34rpx;
+  font-weight: 600;
+}
+.streak {
+  font-size: 20rpx;
+  color: #E6A23C;
+  margin-top: 2rpx;
+}
+
+.summary {
+  display: flex;
+  background: #FFFFFF;
+  margin: 0 24rpx 16rpx;
+  border-radius: 20rpx;
+  padding: 32rpx 0;
+}
+.sitem {
+  flex: 1;
+  text-align: center;
+}
+.slabel {
+  color: #9AA0A6;
+  font-size: 24rpx;
+  margin-bottom: 8rpx;
+}
+.sval {
+  font-size: 34rpx;
+  font-weight: 700;
+}
+.sval.in {
+  color: #E64340;
+}
+
+/* 预算进度卡 */
+.budgetcard {
+  background: #FFFFFF;
+  margin: 0 24rpx 16rpx;
+  border-radius: 20rpx;
+  padding: 22rpx 28rpx;
+}
+.budgetcard.isover {
+  background: #FFF6F5;
+}
+.budget-hover {
+  opacity: 0.85;
+}
+.bbrow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.bblabel {
+  font-size: 24rpx;
+  color: #5A5E66;
+}
+.bbval {
+  font-size: 24rpx;
+  color: #1A1A1A;
+  font-weight: 600;
+}
+.bbar {
+  height: 14rpx;
+  background: #F0F1F3;
+  border-radius: 7rpx;
+  overflow: hidden;
+  margin: 14rpx 0 10rpx;
+}
+.bfill {
+  height: 14rpx;
+  border-radius: 7rpx;
+  background: #07C160;
+}
+.bfill.red {
+  background: #E64340;
+}
+.bbfoot {
+  font-size: 21rpx;
+}
+.bbsub {
+  color: #9AA0A6;
+}
+.bbsub.red {
+  color: #E64340;
+}
+.bbempty {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 25rpx;
+  color: #5A5E66;
+}
+.bbarrow {
+  color: #C7CBD1;
+  font-size: 32rpx;
+}
+
+/* 快捷工具（横向滚动） */
+.toolrow {
+  white-space: nowrap;
+  padding: 0 16rpx 8rpx;
+}
+.toolbtn {
+  display: inline-block;
+  text-align: center;
+  width: 120rpx;
+  padding: 10rpx 0;
+  font-size: 30rpx;
+  color: #5A5E66;
+}
+.toolbtn text {
+  display: block;
+  font-size: 20rpx;
+  color: #6B7280;
+  margin-top: 4rpx;
+}
+.toolbtn-hover {
+  opacity: 0.6;
+}
+
+.dayhead {
+  display: flex;
+  align-items: baseline;
+  padding: 24rpx 32rpx 12rpx;
+}
+.dlabel {
+  font-weight: 600;
+  margin-right: 14rpx;
+}
+.ddate {
+  color: #9AA0A6;
+  font-size: 24rpx;
+  flex: 1;
+}
+.dsum {
+  color: #9AA0A6;
+  font-size: 22rpx;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 32rpx;
+}
+.row.bt {
+  border-top: 1rpx solid #F0F1F3;
+}
+.row-hover {
+  background: #F2F3F5;
+}
+.ricon {
+  width: 76rpx;
+  height: 76rpx;
+  background: #F6F7F9;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 76rpx;
+  font-size: 38rpx;
+  margin-right: 22rpx;
+}
+.rmain {
+  flex: 1;
+  min-width: 0;
+}
+.rcat {
+  font-size: 28rpx;
+}
+.rnote {
+  color: #9AA0A6;
+  font-size: 22rpx;
+  margin-top: 4rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ramt {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+.ramt.income {
+  color: #E64340;
+}
+.ramt.transfer {
+  color: #6B7280;
+  font-weight: 500;
+  font-size: 28rpx;
+}
+
+.empty {
+  text-align: center;
+  color: #9AA0A6;
+  padding: 120rpx 0;
+  font-size: 26rpx;
+}
+.eicon {
+  font-size: 80rpx;
+  margin-bottom: 16rpx;
+}
+.etip {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+}
+
+.fab {
+  position: fixed;
+  right: 40rpx;
+  bottom: 60rpx;
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 50%;
+  background: #07C160;
+  color: #FFFFFF;
+  font-size: 60rpx;
+  line-height: 100rpx;
+  text-align: center;
+  box-shadow: 0 8rpx 24rpx rgba(7, 193, 96, 0.35);
+  z-index: 10;
+}
+.fab-hover {
+  transform: scale(0.94);
+}

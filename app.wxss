@@ -1,0 +1,15 @@
+/* 全局样式 */
+page {
+  background: #F6F7F9;
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  color: #1A1A1A;
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+.card {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  margin: 0 24rpx 16rpx;
+  overflow: hidden;
+}

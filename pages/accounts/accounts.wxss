@@ -1,0 +1,142 @@
+.assets {
+  background: linear-gradient(135deg, #07C160 0%, #0AAE5A 100%);
+  margin: 24rpx;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  color: #FFFFFF;
+}
+.alabel {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+.aval {
+  font-size: 60rpx;
+  font-weight: 700;
+  margin: 8rpx 0 6rpx;
+}
+.atip {
+  font-size: 20rpx;
+  opacity: 0.8;
+}
+
+.card {
+  background: #FFFFFF;
+  margin: 0 24rpx 16rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+.card.pad {
+  padding: 8rpx 28rpx 24rpx;
+}
+
+.arow {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 28rpx;
+}
+.arow.bt {
+  border-top: 1rpx solid #F0F1F3;
+}
+.arow-hover {
+  background: #F5F6F8;
+}
+.aicon {
+  width: 72rpx;
+  height: 72rpx;
+  background: #F6F7F9;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 72rpx;
+  font-size: 34rpx;
+  margin-right: 20rpx;
+}
+.amain {
+  flex: 1;
+  min-width: 0;
+}
+.aname {
+  font-size: 28rpx;
+}
+.atag {
+  font-size: 18rpx;
+  color: #07C160;
+  background: #EAF9F0;
+  border-radius: 6rpx;
+  padding: 2rpx 8rpx;
+  margin-left: 10rpx;
+}
+.ainit {
+  font-size: 20rpx;
+  color: #9AA0A6;
+  margin-top: 4rpx;
+}
+.abal {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.abal.neg {
+  color: #E64340;
+}
+.amore {
+  color: #C7CBD1;
+  margin-left: 12rpx;
+  font-size: 32rpx;
+}
+
+.addbtn {
+  margin: 0 24rpx 16rpx;
+  text-align: center;
+  padding: 22rpx;
+  border-radius: 18rpx;
+  border: 1rpx dashed #C8CDD4;
+  color: #5A5E66;
+  font-size: 26rpx;
+}
+.addbtn-hover {
+  background: #F5F6F8;
+}
+
+.frow {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+}
+.frow.bt {
+  border-top: 1rpx solid #F0F1F3;
+}
+.flabel {
+  width: 90rpx;
+  color: #5A5E66;
+  font-size: 26rpx;
+}
+.finput {
+  flex: 1;
+  font-size: 28rpx;
+}
+.fval {
+  font-size: 28rpx;
+}
+
+.savebtn {
+  margin-top: 24rpx;
+  background: #07C160;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.savebtn.small {
+  padding: 20rpx;
+  font-size: 26rpx;
+}
+.savebtn-hover {
+  opacity: 0.85;
+}
+
+.section {
+  margin: 28rpx 32rpx 12rpx;
+  font-size: 24rpx;
+  color: #9AA0A6;
+}

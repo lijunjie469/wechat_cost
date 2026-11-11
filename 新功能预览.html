@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>记账本 · 新功能预览</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0f1216;min-height:100vh;padding:44px 20px 60px;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;color:#1A1A1A}
+  h1{color:#fff;font-size:24px;text-align:center}
+  .sub{color:#7d8590;font-size:13px;text-align:center;margin:8px 0 34px}
+  .row{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .item{display:flex;flex-direction:column;align-items:center}
+  .phone{width:300px;background:#F6F7F9;border-radius:36px;overflow:hidden;border:7px solid #1c2128;box-shadow:0 20px 50px rgba(0,0,0,.55)}
+  .phead{background:#07C160;color:#fff;text-align:center;padding:12px 0;font-size:13px;font-weight:600}
+  .pbody{height:520px;overflow:hidden;font-size:12px;position:relative}
+  .cap{color:#c9d1d9;font-size:12px;margin-top:12px;text-align:center;max-width:300px;line-height:1.6}
+  .cap b{color:#07C160}
+
+  .hero{background:linear-gradient(135deg,#07C160,#0AAE5A);margin:10px;border-radius:16px;padding:16px;color:#fff}
+  .hero.red{background:linear-gradient(135deg,#E64340,#C9322F)}
+  .hlabel{font-size:11px;opacity:.9}
+  .hval{font-size:24px;font-weight:700;margin:4px 0 10px}
+  .hsub{font-size:12px;font-weight:400;opacity:.85}
+  .hbar{height:8px;background:rgba(255,255,255,.3);border-radius:4px;overflow:hidden}
+  .hfill{height:8px;background:#fff;border-radius:4px}
+  .hfoot{display:flex;justify-content:space-between;font-size:10px;margin-top:7px;opacity:.92}
+
+  .card{background:#fff;margin:0 10px 8px;border-radius:14px;overflow:hidden}
+  .crow{display:flex;align-items:center;padding:12px 14px 4px}
+  .clabel{flex:1;font-size:12px}
+  .cinput{font-size:15px;font-weight:600;text-align:right}
+  .cunit{font-size:10px;color:#9AA0A6;margin-left:4px}
+  .tiprow{display:flex;justify-content:space-between;align-items:center;padding:2px 14px 10px}
+  .tip{font-size:9px;color:#9AA0A6}
+  .ghostbtn{font-size:10px;color:#07C160;background:#EAF9F0;padding:4px 10px;border-radius:99px}
+  .section{margin:8px 14px 4px;font-size:10px;color:#9AA0A6}
+  .cbrow{display:flex;align-items:center;padding:10px 14px}
+  .cbrow.bt{border-top:1px solid #F0F1F3}
+  .cbicon{width:28px;height:28px;background:#F6F7F9;border-radius:50%;text-align:center;line-height:28px;font-size:14px;margin-right:8px}
+  .cbmain{flex:1;min-width:0}
+  .cbtop{display:flex;justify-content:space-between;margin-bottom:5px}
+  .cbname{font-size:12px}
+  .cbused{font-size:9px;color:#9AA0A6}
+  .cbused em{color:#E64340;font-style:normal}
+  .cbbar{height:5px;background:#F0F1F3;border-radius:3px;overflow:hidden}
+  .cbfill{height:5px;background:#07C160;border-radius:3px}
+  .cbfill.red{background:#E64340}
+  .cbinput{width:52px;text-align:right;font-size:11px;color:#1A1A1A}
+
+  .monthbar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 4px}
+  .mnav{width:26px;height:26px;line-height:24px;text-align:center;font-size:18px;color:#07C160;background:#fff;border-radius:50%}
+  .mcenter{text-align:center}
+  .mtitle{font-size:14px;font-weight:600}
+  .msub{font-size:9px;color:#9AA0A6}
+  .cal{background:#fff;margin:0 10px 8px;border-radius:14px;padding:6px 4px 10px}
+  .week{display:flex}
+  .wcell{width:14.28%;text-align:center;font-size:9px;color:#9AA0A6;padding:4px 0}
+  .grid{display:flex;flex-wrap:wrap}
+  .cell{width:14.28%;min-height:44px;padding:3px 1px;text-align:center;border-radius:6px}
+  .cell.blank{visibility:hidden}
+  .cell.today .dnum{color:#07C160;font-weight:700}
+  .cell.sel{background:#EAF9F0}
+  .dnum{font-size:11px;line-height:1.4}
+  .dexp{font-size:8px;color:#5A5E66;line-height:1.2}
+  .dinc{font-size:8px;color:#E64340;line-height:1.2}
+  .daybar{display:flex;align-items:baseline;padding:2px 16px 6px}
+  .dbdate{font-size:11px;font-weight:600;margin-right:8px}
+  .dbsum{flex:1;font-size:9px;color:#9AA0A6}
+  .dblink{font-size:10px;color:#07C160}
+  .ritem{display:flex;align-items:center;padding:9px 14px}
+  .ritem.bt{border-top:1px solid #F0F1F3}
+  .ricon{width:28px;height:28px;background:#F6F7F9;border-radius:50%;text-align:center;line-height:28px;font-size:14px;margin-right:8px}
+  .rmain{flex:1;min-width:0}
+  .rcat{font-size:12px}
+  .rnote{font-size:9px;color:#9AA0A6}
+  .ramt{font-size:12px;font-weight:600}
+  .ramt.income{color:#E64340}
+
+  .arow{display:flex;align-items:center;padding:11px 14px}
+  .arow.bt{border-top:1px solid #F0F1F3}
+  .aicon{width:30px;height:30px;background:#F6F7F9;border-radius:50%;text-align:center;line-height:30px;font-size:15px;margin-right:8px}
+  .amain{flex:1;min-width:0}
+  .aname{font-size:12px}
+  .atag{font-size:8px;color:#07C160;background:#EAF9F0;border-radius:3px;padding:1px 4px;margin-left:5px}
+  .ainit{font-size:9px;color:#9AA0A6}
+  .abal{font-size:13px;font-weight:600}
+  .amore{color:#C7CBD1;margin-left:6px}
+
+  .banner{margin:10px;background:#EAF9F0;border-radius:14px;padding:12px 14px}
+  .btitle{font-size:13px;font-weight:600;color:#06803F}
+  .bdesc{font-size:9.5px;color:#3C7A5A;margin-top:4px;line-height:1.6}
+  .trow{display:flex;align-items:center;padding:11px 12px}
+  .trow.bt{border-top:1px solid #F0F1F3}
+  .ticon{width:28px;height:28px;background:#F6F7F9;border-radius:50%;text-align:center;line-height:28px;font-size:14px;margin-right:8px}
+  .tmain{flex:1;min-width:0}
+  .ttop{display:flex;justify-content:space-between}
+  .tname{font-size:11.5px}
+  .tamt{font-size:11.5px;font-weight:600}
+  .tamt.income{color:#E64340}
+  .tsub{font-size:8.5px;color:#9AA0A6;margin-top:2px}
+  .tright{display:flex;flex-direction:column;align-items:center;margin-left:6px}
+  .sw{width:30px;height:17px;border-radius:99px;background:#07C160;position:relative}
+  .sw.off{background:#D8DCE1}
+  .sw:after{content:"";position:absolute;top:2px;right:2px;width:13px;height:13px;background:#fff;border-radius:50%}
+  .sw.off:after{right:auto;left:2px}
+</style>
+</head>
+<body>
+  <h1>记账本 · 新增功能预览</h1>
+  <div class="sub">预算管理 / 日历视图 / 账户与转账 / 周期账单（小程序原生界面静态模拟）</div>
+  <div class="row">
+
+    <div class="item">
+      <div class="phone">
+        <div class="phead">预算管理</div>
+        <div class="pbody">
+          <div class="hero">
+            <div class="hlabel">2026-10 预算执行</div>
+            <div class="hval">¥3,860.50<span class="hsub"> / ¥5,000</span></div>
+            <div class="hbar"><div class="hfill" style="width:77%"></div></div>
+            <div class="hfoot"><span>剩余 ¥1,139.50</span><span>77%</span></div>
+          </div>
+          <div class="card">
+            <div class="crow"><span class="clabel">每月总预算</span><span class="cinput">5000</span><span class="cunit">元</span></div>
+            <div class="tiprow"><span class="tip">预算对每个月都生效</span><span class="ghostbtn">参考上月</span></div>
+          </div>
+          <div class="section">分类预算</div>
+          <div class="card">
+            <div class="cbrow">
+              <div class="cbicon">🍜</div>
+              <div class="cbmain">
+                <div class="cbtop"><span class="cbname">餐饮</span><span class="cbused">已用 ¥860.00</span></div>
+                <div class="cbbar"><div class="cbfill" style="width:72%"></div></div>
+              </div>
+              <span class="cbinput">1200</span>
+            </div>
+            <div class="cbrow bt">
+              <div class="cbicon">🛍️</div>
+              <div class="cbmain">
+                <div class="cbtop"><span class="cbname">购物</span><span class="cbused">已用 ¥980.00 <em>超支</em></span></div>
+                <div class="cbbar"><div class="cbfill red" style="width:100%"></div></div>
+              </div>
+              <span class="cbinput">800</span>
+            </div>
+            <div class="cbrow bt">
+              <div class="cbicon">🚌</div>
+              <div class="cbmain">
+                <div class="cbtop"><span class="cbname">交通</span><span class="cbused">已用 ¥210.00</span></div>
+                <div class="cbbar"><div class="cbfill" style="width:52%"></div></div>
+              </div>
+              <span class="cbinput">400</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cap"><b>预算管理</b>：总预算 + 分类预算，首页进度条实时显示，超支变红并在记账时弹窗提醒</div>
+    </div>
+
+    <div class="item">
+      <div class="phone">
+        <div class="phead">记账日历</div>
+        <div class="pbody">
+          <div class="monthbar"><div class="mnav">‹</div><div class="mcenter"><div class="mtitle">2026年10月</div><div class="msub">支 ¥3,860.50 · 收 ¥12,500.00</div></div><div class="mnav">›</div></div>
+          <div class="cal">
+            <div class="week"><div class="wcell">日</div><div class="wcell">一</div><div class="wcell">二</div><div class="wcell">三</div><div class="wcell">四</div><div class="wcell">五</div><div class="wcell">六</div></div>
+            <div class="grid">
+              <div class="cell blank"></div>
+              <div class="cell"><div class="dnum">1</div><div class="dexp">86.3</div></div>
+              <div class="cell"><div class="dnum">2</div><div class="dexp">32</div></div>
+              <div class="cell"><div class="dnum">3</div><div class="dinc">+12500</div></div>
+              <div class="cell"><div class="dnum">4</div><div class="dexp">18</div></div>
+              <div class="cell"><div class="dnum">5</div><div class="dexp">200</div></div>
+              <div class="cell"><div class="dnum">6</div></div>
+              <div class="cell"><div class="dnum">7</div><div class="dexp">45.5</div></div>
+              <div class="cell"><div class="dnum">8</div><div class="dexp">128</div></div>
+              <div class="cell"><div class="dnum">9</div></div>
+              <div class="cell"><div class="dnum">10</div><div class="dexp">12</div></div>
+              <div class="cell"><div class="dnum">11</div><div class="dexp">69</div></div>
+              <div class="cell"><div class="dnum">12</div><div class="dexp">25</div></div>
+              <div class="cell"><div class="dnum">13</div></div>
+              <div class="cell"><div class="dnum">14</div><div class="dexp">76.2</div></div>
+              <div class="cell"><div class="dnum">15</div><div class="dexp">32.5</div></div>
+              <div class="cell"><div class="dnum">16</div></div>
+              <div class="cell"><div class="dnum">17</div><div class="dexp">19.9</div></div>
+              <div class="cell"><div class="dnum">18</div><div class="dexp">50</div></div>
+              <div class="cell"><div class="dnum">19</div></div>
+              <div class="cell"><div class="dnum">20</div><div class="dexp">6</div></div>
+              <div class="cell"><div class="dnum">21</div><div class="dexp">299</div></div>
+              <div class="cell sel today"><div class="dnum">22</div><div class="dexp">35.5</div><div class="dinc">+12</div></div>
+              <div class="cell"><div class="dnum">23</div></div>
+              <div class="cell"><div class="dnum">24</div><div class="dexp">15.9</div></div>
+              <div class="cell"><div class="dnum">25</div><div class="dexp">88</div></div>
+              <div class="cell"><div class="dnum">26</div></div>
+              <div class="cell"><div class="dnum">27</div><div class="dexp">42</div></div>
+              <div class="cell"><div class="dnum">28</div></div>
+              <div class="cell"><div class="dnum">29</div><div class="dexp">66</div></div>
+              <div class="cell"><div class="dnum">30</div></div>
+              <div class="cell"><div class="dnum">31</div></div>
+            </div>
+          </div>
+          <div class="daybar"><span class="dbdate">2026-10-22</span><span class="dbsum">支 ¥35.50 · 收 ¥12.00</span><span class="dblink">明细 ›</span></div>
+          <div class="card">
+            <div class="ritem"><div class="ricon">🍜</div><div class="rmain"><div class="rcat">餐饮</div><div class="rnote">午餐 牛肉面 · 微信</div></div><div class="ramt">-35.50</div></div>
+            <div class="ritem bt"><div class="ricon">🧧</div><div class="rmain"><div class="rcat">红包</div><div class="rnote">同事还钱</div></div><div class="ramt income">+12.00</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="cap"><b>日历视图</b>：每天收支一目了然，漏记的日子一眼看出，点日期看当日流水</div>
+    </div>
+
+    <div class="item">
+      <div class="phone">
+        <div class="phead">账户与转账</div>
+        <div class="pbody">
+          <div class="hero">
+            <div class="hlabel">总资产（4 个账户）</div>
+            <div class="hval">¥12,486.20</div>
+            <div class="hfoot"><span>余额 = 初始 + 收入 − 支出 ± 转账</span></div>
+          </div>
+          <div class="card">
+            <div class="arow"><div class="aicon">💚</div><div class="amain"><div class="aname">微信<span class="atag">默认</span></div><div class="ainit">初始 ¥0.00</div></div><div class="abal">¥2,186.30</div><div class="amore">›</div></div>
+            <div class="arow bt"><div class="aicon">💙</div><div class="amain"><div class="aname">支付宝</div><div class="ainit">初始 ¥0.00</div></div><div class="abal">¥1,420.90</div><div class="amore">›</div></div>
+            <div class="arow bt"><div class="aicon">💳</div><div class="amain"><div class="aname">银行卡</div><div class="ainit">初始 ¥8,000.00</div></div><div class="abal">¥8,779.00</div><div class="amore">›</div></div>
+            <div class="arow bt"><div class="aicon">💵</div><div class="amain"><div class="aname">现金</div><div class="ainit">初始 ¥100.00</div></div><div class="abal">¥100.00</div><div class="amore">›</div></div>
+          </div>
+          <div class="section">账户间转账</div>
+          <div class="card">
+            <div class="crow"><span class="clabel" style="flex:none;width:36px;color:#5A5E66">从</span><span style="font-size:12px">💳 银行卡 ›</span></div>
+            <div class="crow" style="padding-top:8px"><span class="clabel" style="flex:none;width:36px;color:#5A5E66">到</span><span style="font-size:12px">💚 微信 ›</span></div>
+            <div class="crow" style="padding-top:8px"><span class="clabel" style="flex:none;width:36px;color:#5A5E66">金额</span><span class="cinput">1000</span></div>
+            <div style="margin:8px 12px 12px;background:#07C160;color:#fff;text-align:center;padding:9px;border-radius:9px;font-size:12px;font-weight:600">确认转账</div>
+          </div>
+        </div>
+      </div>
+      <div class="cap"><b>多账户</b>：现金/微信/支付宝/银行卡分开记，自动算余额与总资产，支持账户间转账</div>
+    </div>
+
+    <div class="item">
+      <div class="phone">
+        <div class="phead">周期账单</div>
+        <div class="pbody">
+          <div class="banner">
+            <div class="btitle">🔁 周期账单</div>
+            <div class="bdesc">房租、会员订阅、工资这类固定收支，设一次模板，到期自动记账（打开小程序时自动补齐，不会重复）。</div>
+          </div>
+          <div class="section" style="margin:8px 14px 4px">已设模板（3）</div>
+          <div class="card">
+            <div class="trow"><div class="ticon">🏠</div><div class="tmain"><div class="ttop"><span class="tname">房租</span><span class="tamt">-¥2,000.00</span></div><div class="tsub">每月 5 日 · 住房 · 银行卡 · 支出</div></div><div class="tright"><div class="sw"></div></div></div>
+            <div class="trow bt"><div class="ticon">💰</div><div class="tmain"><div class="ttop"><span class="tname">工资</span><span class="tamt income">+¥12,500.00</span></div><div class="tsub">每月 10 日 · 工资 · 银行卡 · 收入</div></div><div class="tright"><div class="sw"></div></div></div>
+            <div class="trow bt"><div class="ticon">📱</div><div class="tmain"><div class="ttop"><span class="tname">话费套餐</span><span class="tamt">-¥50.00</span></div><div class="tsub">每月 18 日 · 通讯 · 支付宝 · 支出</div></div><div class="tright"><div class="sw off"></div></div></div>
+          </div>
+          <div class="section">新增模板</div>
+          <div class="card" style="padding:8px 14px 12px">
+            <div class="cbtop" style="margin:4px 0 8px"><span class="cbname">支出 · 分类 · 金额 · 每月几号</span></div>
+            <div class="cbbar" style="height:8px;background:#F6F7F9;border-radius:6px"></div>
+            <div style="margin-top:10px;background:#07C160;color:#fff;text-align:center;padding:9px;border-radius:9px;font-size:12px;font-weight:600">添加模板</div>
+          </div>
+        </div>
+      </div>
+      <div class="cap"><b>周期账单</b>：房租/订阅/工资设一次自动记，按 extId 幂等，绝不重复入账</div>
+    </div>
+
+  </div>
+</body>
+</html>

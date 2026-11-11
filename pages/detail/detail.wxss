@@ -1,0 +1,152 @@
+page {
+  background: #F6F7F9;
+}
+
+/* 筛选条 */
+.filterbar {
+  background: #FFFFFF;
+  padding: 20rpx 24rpx 12rpx;
+  margin-bottom: 16rpx;
+}
+.frow {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 14rpx;
+  align-items: center;
+}
+.fcell {
+  padding: 14rpx 22rpx;
+  background: #F5F6F8;
+  border-radius: 12rpx;
+  font-size: 25rpx;
+  color: #5A5E66;
+  white-space: nowrap;
+}
+.fcell.on {
+  background: rgba(7, 193, 96, 0.12);
+  color: #07C160;
+}
+.freset {
+  margin-left: auto;
+  font-size: 25rpx;
+  color: #9AA0A6;
+  padding: 14rpx 10rpx;
+}
+.fsearch {
+  margin-bottom: 6rpx;
+}
+.finput {
+  background: #F5F6F8;
+  border-radius: 12rpx;
+  padding: 16rpx 22rpx;
+  font-size: 26rpx;
+}
+
+/* 汇总 */
+.sumbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 32rpx 16rpx;
+  font-size: 23rpx;
+  color: #6B7280;
+}
+.cnum {
+  color: #2B2F33;
+  font-weight: 600;
+}
+.out {
+  color: #E0584A;
+}
+.in {
+  color: #07C160;
+}
+
+/* 列表 */
+.dlist {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  margin: 0 24rpx;
+  overflow: hidden;
+}
+.drow {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 28rpx;
+  border-bottom: 1rpx solid #F2F3F5;
+}
+.drow:last-child {
+  border-bottom: none;
+}
+.drow-hover {
+  background: #F7F8FA;
+}
+.dicon {
+  width: 64rpx;
+  font-size: 34rpx;
+}
+.dmain {
+  flex: 1;
+  min-width: 0;
+}
+.dtop {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.dnote {
+  font-size: 29rpx;
+  color: #2B2F33;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 62%;
+}
+.damt {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.damt.expense {
+  color: #E0584A;
+}
+.damt.income {
+  color: #07C160;
+}
+.dsub {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #9AA0A6;
+}
+.dtag {
+  margin-left: 10rpx;
+  padding: 2rpx 10rpx;
+  background: #F2F3F5;
+  border-radius: 8rpx;
+  font-size: 20rpx;
+}
+
+/* 空态与加载 */
+.empty {
+  text-align: center;
+  padding: 120rpx 40rpx;
+  color: #9AA0A6;
+  font-size: 26rpx;
+}
+.eicon {
+  font-size: 72rpx;
+  margin-bottom: 16rpx;
+}
+.etip {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: #B0B4BA;
+}
+.loadmore {
+  text-align: center;
+  padding: 28rpx;
+  color: #07C160;
+  font-size: 26rpx;
+}
+.loadmore.tip {
+  color: #B0B4BA;
+  font-size: 23rpx;
+}

@@ -1,0 +1,91 @@
+<view class="monthbar">
+  <view class="mnav" bindtap="prevMonth">‹</view>
+  <view class="mcenter">
+    <view class="mtitle">{{month}}</view>
+    <view class="streak" wx:if="{{streak > 1}}">🔥 连续记账 {{streak}} 天</view>
+  </view>
+  <view class="mnav" bindtap="nextMonth">›</view>
+</view>
+
+<view class="summary">
+  <view class="sitem">
+    <view class="slabel">支出</view>
+    <view class="sval">¥{{summary.expense}}</view>
+  </view>
+  <view class="sitem">
+    <view class="slabel">收入</view>
+    <view class="sval in">¥{{summary.income}}</view>
+  </view>
+  <view class="sitem">
+    <view class="slabel">结余</view>
+    <view class="sval">¥{{summary.balance}}</view>
+  </view>
+</view>
+
+<view class="budgetcard {{budget.over ? 'isover' : ''}}" bindtap="goBudget" hover-class="budget-hover">
+  <block wx:if="{{budget.has}}">
+    <view class="bbrow">
+      <text class="bblabel">本月预算</text>
+      <text class="bbval">¥{{budget.used}} / ¥{{budget.total}}</text>
+    </view>
+    <view class="bbar">
+      <view class="bfill {{budget.over ? 'red' : ''}}" style="width: {{budget.pct}}%;"></view>
+    </view>
+    <view class="bbrow bbfoot">
+      <text wx:if="{{!budget.over}}" class="bbsub">还剩 ¥{{budget.left}}</text>
+      <text wx:else class="bbsub red">已超支 ¥{{budget.overText}}</text>
+      <text class="bbsub">{{budget.pct}}%</text>
+    </view>
+  </block>
+  <view wx:else class="bbempty">
+    <text>🎯 设置本月预算，管住手</text>
+    <text class="bbarrow">›</text>
+  </view>
+</view>
+
+<scroll-view class="toolrow" scroll-x="{{true}}" show-scrollbar="{{false}}">
+  <view class="toolbtn" bindtap="goImport" hover-class="toolbtn-hover">📥<text>导入账单</text></view>
+  <view class="toolbtn" bindtap="goDetail" hover-class="toolbtn-hover">📋<text>流水明细</text></view>
+  <view class="toolbtn" bindtap="goCalendar" hover-class="toolbtn-hover">🗓️<text>日历</text></view>
+  <view class="toolbtn" bindtap="goAccounts" hover-class="toolbtn-hover">💳<text>账户</text></view>
+  <view class="toolbtn" bindtap="goBudget" hover-class="toolbtn-hover">🎯<text>预算</text></view>
+  <view class="toolbtn" bindtap="goRecurring" hover-class="toolbtn-hover">🔁<text>周期账单</text></view>
+  <view class="toolbtn" bindtap="goSettings" hover-class="toolbtn-hover">⚙️<text>备份设置</text></view>
+</scroll-view>
+
+<view wx:if="{{isEmpty}}" class="empty">
+  <view class="eicon">🧾</view>
+  <view>这个月还没有记录</view>
+  <view class="etip">点右下角按钮，记下第一笔</view>
+</view>
+
+<block wx:for="{{groups}}" wx:key="date" wx:for-index="gidx">
+  <view class="dayhead">
+    <text class="dlabel">{{item.label}}</text>
+    <text class="ddate">{{item.date}}</text>
+    <text class="dsum">支 ¥{{item.dayExpense}} · 收 ¥{{item.dayIncome}}</text>
+  </view>
+  <view class="card">
+    <view
+      wx:for="{{item.items}}"
+      wx:for-item="rec"
+      wx:for-index="idx"
+      wx:key="id"
+      class="row {{idx > 0 ? 'bt' : ''}}"
+      data-id="{{rec.id}}"
+      data-type="{{rec.type}}"
+      bindtap="editItem"
+      bindlongpress="onLongItem"
+      hover-class="row-hover"
+    >
+      <view class="ricon">{{rec.icon}}</view>
+      <view class="rmain">
+        <view class="rcat">{{rec.catName}}</view>
+        <view class="rnote" wx:if="{{rec.note}}">{{rec.note}}</view>
+      </view>
+      <view class="ramt {{rec.type}}">{{rec.amountText}}</view>
+    </view>
+  </view>
+</block>
+
+<view class="fab" bindtap="goAdd" hover-class="fab-hover">＋</view>

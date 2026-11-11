@@ -1,0 +1,39 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/stats/stats",
+    "pages/add/add",
+    "pages/import/import",
+    "pages/detail/detail",
+    "pages/calendar/calendar",
+    "pages/accounts/accounts",
+    "pages/budget/budget",
+    "pages/recurring/recurring",
+    "pages/settings/settings"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#07C160",
+    "navigationBarTitleText": "记账本",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F6F7F9"
+  },
+  "tabBar": {
+    "color": "#9AA0A6",
+    "selectedColor": "#07C160",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "账单"
+      },
+      {
+        "pagePath": "pages/stats/stats",
+        "text": "统计"
+      }
+    ]
+  },
+  "style": "v2",
+  "__usePrivacyCheck__": true,
+  "sitemapLocation": "sitemap.json"
+}

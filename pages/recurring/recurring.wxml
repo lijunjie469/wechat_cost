@@ -1,0 +1,59 @@
+<view class="banner">
+  <view class="btitle">🔁 周期账单</view>
+  <view class="bdesc">房租、会员订阅、工资这类固定收支，设一次模板，到期自动记账（打开小程序时自动补齐，不会重复）。</view>
+</view>
+
+<view class="section" wx:if="{{list.length}}">已设模板（{{list.length}}）</view>
+<view class="card" wx:if="{{list.length}}">
+  <view class="trow {{idx > 0 ? 'bt' : ''}}" wx:for="{{list}}" wx:key="id" wx:for-index="idx">
+    <view class="ticon">{{item.icon}}</view>
+    <view class="tmain">
+      <view class="ttop">
+        <text class="tname">{{item.note}}</text>
+        <text class="tamt {{item.type}}">{{item.type === 'income' ? '+' : '-'}}¥{{item.amountText}}</text>
+      </view>
+      <view class="tsub">每月 {{item.day}} 日 · {{item.catName}} · {{item.accName}} · {{item.typeName}}</view>
+    </view>
+    <view class="tright">
+      <switch checked="{{item.enabled}}" color="#07C160" data-id="{{item.id}}" bindchange="toggle" />
+      <text class="tdel" data-id="{{item.id}}" bindtap="remove">删除</text>
+    </view>
+  </view>
+</view>
+
+<view class="section">新增模板</view>
+<view class="card pad">
+  <view class="toggle">
+    <view class="tbtn {{type === 'expense' ? 'on' : ''}}" data-t="expense" bindtap="setType">支出</view>
+    <view class="tbtn {{type === 'income' ? 'on' : ''}}" data-t="income" bindtap="setType">收入</view>
+  </view>
+
+  <view class="frow">
+    <text class="flabel">分类</text>
+    <picker range="{{categories}}" range-key="name" value="{{catIndex}}" bindchange="onCat">
+      <view class="fval">{{categories[catIndex].icon}} {{categories[catIndex].name}} ›</view>
+    </picker>
+  </view>
+  <view class="frow bt">
+    <text class="flabel">金额</text>
+    <input class="finput" type="digit" placeholder="0.00" value="{{amountStr}}" bindinput="onAmount" />
+  </view>
+  <view class="frow bt">
+    <text class="flabel">每月</text>
+    <input class="finput" type="number" placeholder="1-31" value="{{dayStr}}" bindinput="onDay" />
+    <text class="funit">日</text>
+  </view>
+  <view class="frow bt">
+    <text class="flabel">账户</text>
+    <picker range="{{names}}" value="{{accIndex}}" bindchange="onAcc">
+      <view class="fval">{{names[accIndex] || '默认账户'}} ›</view>
+    </picker>
+  </view>
+  <view class="frow bt">
+    <text class="flabel">备注</text>
+    <input class="finput" placeholder="如 房租 / 网易云会员" value="{{note}}" bindinput="onNote" maxlength="20" />
+  </view>
+
+  <view class="savebtn" bindtap="addTemplate" hover-class="btn-hover">添加模板</view>
+  <view class="ghost" bindtap="runNow" hover-class="btn-hover">立即补记到期账单</view>
+</view>

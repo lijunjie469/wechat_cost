@@ -1,0 +1,179 @@
+.hero {
+  background: linear-gradient(135deg, #07C160 0%, #0AAE5A 100%);
+  margin: 24rpx;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  color: #FFFFFF;
+}
+.hero.over {
+  background: linear-gradient(135deg, #E64340 0%, #C9322F 100%);
+}
+.hlabel {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+.hval {
+  font-size: 52rpx;
+  font-weight: 700;
+  margin: 8rpx 0 18rpx;
+}
+.hsub {
+  font-size: 26rpx;
+  font-weight: 400;
+  opacity: 0.85;
+}
+.hbar {
+  height: 16rpx;
+  background: rgba(255, 255, 255, 0.28);
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+.hfill {
+  height: 16rpx;
+  background: #FFFFFF;
+  border-radius: 8rpx;
+}
+.hfill.red {
+  background: #FFE1E0;
+}
+.hfoot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 22rpx;
+  margin-top: 12rpx;
+  opacity: 0.92;
+}
+
+.card {
+  background: #FFFFFF;
+  margin: 0 24rpx 16rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+
+.crow {
+  display: flex;
+  align-items: center;
+  padding: 26rpx 28rpx 8rpx;
+}
+.clabel {
+  flex: 1;
+  font-size: 28rpx;
+}
+.cinput {
+  width: 200rpx;
+  text-align: right;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+.cunit {
+  color: #9AA0A6;
+  font-size: 24rpx;
+  margin-left: 8rpx;
+}
+.tiprow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28rpx 22rpx;
+}
+.tip {
+  font-size: 20rpx;
+  color: #9AA0A6;
+}
+.ghostbtn {
+  font-size: 22rpx;
+  color: #07C160;
+  background: #EAF9F0;
+  padding: 8rpx 18rpx;
+  border-radius: 999rpx;
+}
+.ghostbtn-hover {
+  opacity: 0.7;
+}
+
+.section {
+  margin: 24rpx 32rpx 12rpx;
+  font-size: 24rpx;
+  color: #9AA0A6;
+}
+
+.cbrow {
+  display: flex;
+  align-items: center;
+  padding: 22rpx 28rpx;
+}
+.cbrow.bt {
+  border-top: 1rpx solid #F0F1F3;
+}
+.cbicon {
+  width: 60rpx;
+  height: 60rpx;
+  background: #F6F7F9;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 30rpx;
+  margin-right: 18rpx;
+}
+.cbmain {
+  flex: 1;
+  min-width: 0;
+}
+.cbtop {
+  display: flex;
+  justify-content: space-between;
+}
+.cbname {
+  font-size: 27rpx;
+}
+.cbused {
+  font-size: 20rpx;
+  color: #9AA0A6;
+}
+.cbover {
+  color: #E64340;
+}
+.cbbar {
+  height: 10rpx;
+  background: #F0F1F3;
+  border-radius: 5rpx;
+  overflow: hidden;
+  margin-top: 10rpx;
+}
+.cbfill {
+  height: 10rpx;
+  background: #07C160;
+  border-radius: 5rpx;
+}
+.cbfill.red {
+  background: #E64340;
+}
+.cbinput {
+  width: 130rpx;
+  text-align: right;
+  font-size: 26rpx;
+  color: #1A1A1A;
+}
+
+.actions {
+  padding: 20rpx 24rpx 40rpx;
+}
+.primary {
+  background: #07C160;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 26rpx;
+  border-radius: 18rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.ghost {
+  text-align: center;
+  padding: 24rpx;
+  color: #9AA0A6;
+  font-size: 26rpx;
+}
+.btn-hover {
+  opacity: 0.85;
+}

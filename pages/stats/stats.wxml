@@ -1,0 +1,172 @@
+<view class="monthbar">
+  <view class="mnav" bindtap="prevMonth">‹</view>
+  <view class="mtitle">{{month}}</view>
+  <view class="mnav" bindtap="nextMonth">›</view>
+</view>
+
+<view class="tabs">
+  <view class="tab {{tab === 'overview' ? 'on' : ''}}" data-tab="overview" bindtap="setTab">总览</view>
+  <view class="tab {{tab === 'trend' ? 'on' : ''}}" data-tab="trend" bindtap="setTab">趋势</view>
+  <view class="tab {{tab === 'party' ? 'on' : ''}}" data-tab="party" bindtap="setTab">交易对手</view>
+  <view class="tab {{tab === 'amount' ? 'on' : ''}}" data-tab="amount" bindtap="setTab">金额分析</view>
+</view>
+
+<!-- 总览 -->
+<block wx:if="{{tab === 'overview'}}">
+  <view class="toggle">
+    <view class="tbtn {{type === 'expense' ? 'on' : ''}}" data-t="expense" bindtap="setType">支出</view>
+    <view class="tbtn {{type === 'income' ? 'on' : ''}}" data-t="income" bindtap="setType">收入</view>
+  </view>
+
+  <view class="panel">
+    <view class="ptotal">总{{typeName}} ¥{{total}}</view>
+    <view class="psub">共 {{count}} 笔 · 日均 ¥{{avg}}</view>
+    <view class="piewrap" wx:if="{{!isEmpty}}">
+      <canvas type="2d" id="pie" class="pie"></canvas>
+      <view class="piecenter">
+        <view class="pclabel">{{typeName}}</view>
+        <view class="pcval">¥{{total}}</view>
+      </view>
+    </view>
+    <view wx:else class="pempty">本月暂无{{typeName}}记录</view>
+  </view>
+
+  <view class="blist" wx:if="{{!isEmpty}}">
+    <view class="brow {{idx > 0 ? 'bt' : ''}}" wx:for="{{list}}" wx:key="id" wx:for-index="idx">
+      <view class="bicon">{{item.icon}}</view>
+      <view class="bmain">
+        <view class="btop">
+          <text class="bname">{{item.name}}</text>
+          <text class="bpct">{{item.pct}}%</text>
+        </view>
+        <view class="bbar">
+          <view class="bfill" style="width: {{item.barW}}%; background: {{item.color}};"></view>
+        </view>
+      </view>
+      <view class="bsum">¥{{item.sumText}}</view>
+    </view>
+  </view>
+</block>
+
+<!-- 交易对手 -->
+<block wx:if="{{tab === 'party'}}">
+  <view class="toggle">
+    <view class="tbtn {{partyType === 'expense' ? 'on' : ''}}" data-t="expense" bindtap="setPartyType">支出</view>
+    <view class="tbtn {{partyType === 'income' ? 'on' : ''}}" data-t="income" bindtap="setPartyType">收入</view>
+  </view>
+
+  <view class="panel">
+    <view class="ptitle">交易对手 / 商家 TOP {{partyList.length}}</view>
+    <view class="ptips">微信账单按「交易对方」归并，手工记账按备注归并</view>
+    <view wx:if="{{partyEmpty}}" class="pempty">本月暂无可统计的记录</view>
+    <view class="plist" wx:else>
+      <view class="prow" wx:for="{{partyList}}" wx:key="name" data-name="{{item.name}}" bindtap="pickParty">
+        <view class="prank">{{index + 1}}</view>
+        <view class="pmain">
+          <view class="ptop">
+            <text class="pname {{item.name === partyKey ? 'sel' : ''}}">{{item.name}}</text>
+            <text class="pamt">¥{{item.sumText}}</text>
+          </view>
+          <view class="pbar">
+            <view class="pfill {{partyType === 'income' ? 'in' : ''}}" style="width: {{item.barW}}%;"></view>
+          </view>
+        </view>
+        <view class="pcount">{{item.count}}笔</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel" wx:if="{{partyKey}}">
+    <view class="ptitle">「{{partyKey}}」近 6 个月{{partyTypeName}}</view>
+    <view class="cols">
+      <view class="col" wx:for="{{partyMonthly}}" wx:key="month">
+        <view class="cval">{{item.sumText}}</view>
+        <view class="cbarwrap">
+          <view class="cbar" style="height: {{item.h}}rpx;"></view>
+        </view>
+        <view class="clabel">{{item.month}}</view>
+      </view>
+    </view>
+  </view>
+</block>
+
+<!-- 金额分析 -->
+<block wx:if="{{tab === 'amount'}}">
+  <view class="panel">
+    <view class="ptitle">金额区间分布（本月支出）</view>
+    <view class="blist2">
+      <view class="brow2" wx:for="{{amountRows}}" wx:key="label">
+        <view class="brlabel">¥{{item.label}}</view>
+        <view class="brbar">
+          <view class="brfill" style="width: {{item.barW}}%;"></view>
+        </view>
+        <view class="brpct">{{item.pct}}%</view>
+        <view class="brsum">¥{{item.sumText}} · {{item.count}}笔</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="ptitle">大额支出专项</view>
+    <view class="bigrow">
+      <text class="biglabel">单笔 ≥ ¥</text>
+      <input class="thinput" type="digit" value="{{bigThreshold}}" bindinput="onThresholdInput" />
+      <view class="applybtn" bindtap="applyThreshold">应用</view>
+    </view>
+    <view class="ptips">{{bigCount}} 笔 · 合计 ¥{{bigSum}} · 占本月支出 {{bigPct}}%</view>
+    <view wx:if="{{bigCount === 0}}" class="pempty">没有超过该金额的支出</view>
+    <view class="plist" wx:else>
+      <view class="prow big" wx:for="{{bigList}}" wx:key="id" data-id="{{item.id}}" bindtap="editRec">
+        <view class="bicon2">{{item.icon}}</view>
+        <view class="pmain">
+          <view class="ptop">
+            <text class="pname">{{item.note}}</text>
+            <text class="pamt">¥{{item.sumText}}</text>
+          </view>
+          <view class="psub">{{item.date}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</block>
+
+<!-- 趋势 -->
+<block wx:if="{{tab === 'trend'}}">
+  <view class="panel">
+    <view class="ptitle">近 6 个月收支趋势</view>
+    <view class="legend">
+      <text class="dot exp"></text><text class="lgtxt">支出</text>
+      <text class="dot inc"></text><text class="lgtxt">收入</text>
+      <text class="legendnote">月均 支 ¥{{avgExp}} · 收 ¥{{avgInc}}</text>
+    </view>
+    <view class="cols">
+      <view class="col" wx:for="{{trendRows}}" wx:key="month">
+        <view class="cval">{{item.expLabel}}</view>
+        <view class="cbars">
+          <view class="cbar2 exp" style="height: {{item.hExp}}rpx;"></view>
+          <view class="cbar2 inc" style="height: {{item.hInc}}rpx;"></view>
+        </view>
+        <view class="clabel">{{item.month}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="ptitle">本月 vs 上月</view>
+    <view class="momrow">
+      <view class="momitem">
+        <view class="momlabel">支出</view>
+        <view class="momval">¥{{mom.curExp}}</view>
+        <view class="momsub">上月 ¥{{mom.prevExp}}</view>
+        <view class="mompct {{mom.upExp ? 'bad' : 'good'}}">{{mom.expText}}%</view>
+      </view>
+      <view class="momitem">
+        <view class="momlabel">收入</view>
+        <view class="momval">¥{{mom.curInc}}</view>
+        <view class="momsub">上月 ¥{{mom.prevInc}}</view>
+        <view class="mompct {{mom.upInc ? 'good' : 'bad'}}">{{mom.incText}}%</view>
+      </view>
+    </view>
+    <view class="ptips">支出上涨不利于结余，收入上涨才是好事；点击上方月份可切换统计区间</view>
+  </view>
+</block>

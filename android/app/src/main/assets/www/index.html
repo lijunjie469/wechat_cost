@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>记账本 · 本地记账 Web 版</title>
+<meta name="description" content="零后端、纯本地存储的个人记账工具，支持导入微信支付账单、预算、多账户与收支统计。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📒</text></svg>">
+<link rel="stylesheet" href="css/style.css?v=20261108q">
+</head>
+<body data-view="home">
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-logo">📒</span><div><b>记账本</b><small>本地 · 私密 · 无后端</small></div></div>
+    <nav class="side-nav">
+      <button class="nav-item active" data-nav="home"><span>🧾</span>账单</button>
+      <button class="nav-item" data-nav="stats"><span>📊</span>统计</button>
+      <button class="nav-item" data-nav="detail"><span>📋</span>明细</button>
+      <button class="nav-item" data-nav="import"><span>📥</span>导入账单</button>
+      <button class="nav-item" data-nav="settings"><span>⚙️</span>数据与设置</button>
+    </nav>
+    <div class="side-foot">
+      <button id="btnTheme" class="ghost-btn" type="button">🌙 深色模式</button>
+      <p class="tip">数据只保存在本机浏览器<br>不会上传到任何服务器</p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="month-nav" id="monthNav">
+        <button class="icon-btn" id="btnPrevMonth" title="上一期">‹</button>
+        <div class="month-label"><h1 id="monthTitle">—</h1><span id="monthSub"></span></div>
+        <button class="icon-btn" id="btnNextMonth" title="下一期">›</button>
+        <button class="ghost-btn small" id="btnThisMonth">本月</button>
+      </div>
+      <div class="topbar-right">
+        <h1 class="view-title" id="viewTitle"></h1>
+        <button class="btn primary" id="btnAddTop">＋ 记一笔</button>
+      </div>
+    </header>
+
+    <!-- 账单 -->
+    <section class="view" id="view-home">
+      <div class="summary-card">
+        <div class="summary-item"><span>本月支出</span><b class="num" id="sumExpense">0.00</b></div>
+        <div class="summary-item"><span>本月收入</span><b class="num" id="sumIncome">0.00</b></div>
+        <div class="summary-item"><span>结余</span><b class="num" id="sumBalance">0.00</b></div>
+      </div>
+
+      <div class="budget-card hidden" id="budgetCard">
+        <div class="budget-head"><span id="budgetText">每月预算</span><button class="link-btn" id="btnEditBudget">调整</button></div>
+        <div class="progress"><i id="budgetBar"></i></div>
+      </div>
+
+      <div class="toolbar">
+        <input type="search" id="searchInput" class="input grow" placeholder="搜索备注、商家或金额…">
+        <select id="filterType" class="input"><option value="all">全部收支</option><option value="expense">仅支出</option><option value="income">仅收入</option><option value="transfer">仅转账</option></select>
+        <select id="filterCat" class="input"><option value="all">全部分类</option></select>
+        <select id="filterAcct" class="input"><option value="all">全部账户</option></select>
+      </div>
+
+      <div id="recordList"></div>
+      <div class="empty hidden" id="homeEmpty"><div class="empty-icon">🗒️</div><p id="emptyText">这个月还没有记录</p><button class="btn primary" id="btnEmptyAdd">记第一笔</button><button class="link-btn" id="btnSeedDemo" style="margin-left:12px">载入示例数据</button></div>
+    </section>
+
+    <!-- 统计 -->
+    <section class="view hidden" id="view-stats">
+      <div class="stats-toolbar">
+        <div class="seg" id="periodSeg"><button class="active" data-period="month">月度</button><button data-period="year">年度</button></div>
+        <div class="seg" id="statsTypeSeg"><button class="active" data-stype="expense">支出</button><button data-stype="income">收入</button></div>
+      </div>
+      <div class="month-row">
+        <button class="icon-btn" id="stPrev" title="上一期">‹</button>
+        <b id="stMonthLabel">—</b>
+        <button class="icon-btn" id="stNext" title="下一期">›</button>
+      </div>
+      <div class="stat-cards">
+        <div class="mini-card"><span>总支出</span><b class="num expense" id="stExpense">0.00</b><i class="delta" id="stExpenseDelta"></i></div>
+        <div class="mini-card"><span>总收入</span><b class="num income" id="stIncome">0.00</b><i class="delta" id="stIncomeDelta"></i></div>
+        <div class="mini-card"><span>日均支出</span><b class="num" id="stAvg">0.00</b></div>
+        <div class="mini-card"><span>记账笔数</span><b class="num" id="stCount">0</b></div>
+      </div>
+
+      <div class="tabs" id="statsTabs">
+        <button class="active" data-tab="overview">总览</button>
+        <button data-tab="trend">趋势</button>
+        <button data-tab="party">交易对手</button>
+        <button data-tab="amount">金额分析</button>
+      </div>
+
+      <div class="st-tab" id="st-overview">
+        <div class="panel">
+          <div class="panel-head"><h2>分类构成</h2></div>
+          <div class="donut-wrap"><canvas id="donutChart" width="260" height="260"></canvas><div class="legend" id="donutLegend"></div></div>
+          <div class="empty small hidden" id="statsEmpty">暂无该类型记录</div>
+        </div>
+        <div class="panel"><div class="panel-head"><h2>分类排行</h2></div><div id="rankList"></div></div>
+        <div class="panel"><div class="panel-head"><h2 id="trendTitle">近 6 个月收支</h2></div><canvas id="trendChart" height="240"></canvas></div>
+        <div class="panel" id="heatPanel"><div class="panel-head"><h2>每日支出热力<span class="ph-tip">点某一天看当日明细</span></h2></div><div id="heatGrid" class="heat-grid"></div><div id="dayDetail" class="day-detail hidden"></div></div>
+        <div class="panel" id="dailyPanel"><div class="panel-head"><h2 id="dailyTitle">本月每日支出</h2></div><canvas id="dailyChart" height="220"></canvas></div>
+        <div class="panel"><div class="panel-head"><h2>分类趋势（近 6 个月 Top 4）</h2></div><canvas id="catTrend" height="240"></canvas></div>
+        <div class="panel"><div class="panel-head"><h2>月度分类透视</h2></div><div class="table-wrap" id="pivotWrap"></div></div>
+      </div>
+
+      <div class="st-tab hidden" id="st-trend">
+        <div class="panel"><div class="panel-head"><h2>账户余额走势</h2></div><canvas id="balanceChart" height="240"></canvas></div>
+        <div class="panel"><div class="panel-head"><h2>星期分布</h2></div><canvas id="weekChart" height="230"></canvas></div>
+        <div class="panel"><div class="panel-head"><h2>每日净现金流与 7 日均线</h2></div><canvas id="cashChart" height="250"></canvas></div>
+        <div class="panel"><div class="panel-head"><h2>月度明细</h2></div><div class="table-wrap" id="monthTableWrap"></div></div>
+      </div>
+
+      <div class="st-tab hidden" id="st-party">
+        <div class="panel">
+          <div class="panel-head"><h2>交易对手 / 商家 TOP 15</h2>
+            <div class="seg" id="partyTypeSeg"><button class="active" data-ptype="expense">支出</button><button data-ptype="income">收入</button></div>
+          </div>
+          <p class="tip">数据来自微信账单的「交易对方」，手动记账则按备注归并；点击一行查看该对手的月度往来。</p>
+          <div id="partyList"></div>
+        </div>
+        <div class="panel"><div class="panel-head"><h2 id="partyDetailTitle">对手往来</h2></div><canvas id="partyChart" height="230"></canvas><div id="partyRecords" class="party-records"></div></div>
+      </div>
+
+      <div class="st-tab hidden" id="st-amount">
+        <div class="panel"><div class="panel-head"><h2>金额区间分布</h2></div><canvas id="amountChart" height="240"></canvas><div class="legend" id="amountLegend"></div></div>
+        <div class="panel">
+          <div class="panel-head"><h2>大额支出专项</h2>
+            <div class="form-row" style="gap:8px"><span class="tip">单笔≥</span><input type="number" id="bigThreshold" class="input" style="max-width:110px" value="100"><button class="btn small" id="btnBigApply">应用</button></div>
+          </div>
+          <div class="import-stats" id="bigStats"></div>
+          <canvas id="bigTrend" height="220"></canvas>
+          <div id="bigList" style="margin-top:14px"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 明细 -->
+    <section class="view hidden" id="view-detail">
+      <div class="panel">
+        <div class="panel-head"><h2>筛选条件</h2><button class="ghost-btn small" id="btnDetailReset">重置</button></div>
+        <div class="filter-grid">
+          <label>起始日期<input type="date" id="dFrom" class="input"></label>
+          <label>结束日期<input type="date" id="dTo" class="input"></label>
+          <label>收支<select id="dType" class="input"><option value="all">全部</option><option value="expense">支出</option><option value="income">收入</option><option value="transfer">转账</option></select></label>
+          <label>分类<select id="dCat" class="input"><option value="all">全部</option></select></label>
+          <label>账户<select id="dAcct" class="input"><option value="all">全部</option></select></label>
+          <label>最低金额<input type="number" id="dMin" class="input" placeholder="0"></label>
+          <label>最高金额<input type="number" id="dMax" class="input" placeholder="不限"></label>
+          <label class="grow">关键词<input type="search" id="dQ" class="input" placeholder="备注 / 对方 / 金额"></label>
+        </div>
+        <div class="import-stats" id="detailSummary" style="margin-top:14px"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>明细列表</h2><button class="ghost-btn small" id="btnExportFiltered">导出筛选结果 CSV</button></div>
+        <div class="table-wrap"><table class="data-table" id="detailTable">
+          <thead><tr>
+            <th data-sort="date">日期</th><th data-sort="type">收支</th><th data-sort="category">分类</th>
+            <th data-sort="account">账户</th><th>备注</th><th>交易对方</th><th class="ta-r" data-sort="amount">金额</th>
+          </tr></thead>
+          <tbody id="detailBody"></tbody>
+        </table></div>
+        <div class="pager" id="detailPager"></div>
+      </div>
+    </section>
+
+    <!-- 导入 -->
+    <section class="view hidden" id="view-import">
+      <div class="panel">
+        <div class="panel-head"><h2>导入账单（微信 / 银行 PDF）</h2></div>
+        <div class="dropzone" id="dropzone">
+          <div class="dz-icon">📄</div>
+          <p><b>拖拽账单文件到这里</b>，或<button class="link-btn" id="btnPickFile">点击选择</button></p>
+          <small>支持 .xlsx / .csv / .pdf（银行电子账单也能试），可一次选多份，文件只在本机解析</small>
+          <input type="file" id="fileInput" accept=".csv,.txt,.xlsx,.pdf" multiple hidden>
+        </div>
+
+        <label class="merge-opt">
+          <input type="checkbox" id="optMerge" checked>
+          <span><b>合并多份账单</b>：勾选后，再选或拖入第二份会累加到当前预览，可把微信账单和银行流水合成一份再导入；不勾选则每次替换预览。<br>加了银行流水就<b>以银行为准</b>（金额取流水、商户名取微信/支付宝）；只有微信或只有支付宝时<b>各按自己的账单算</b>，互不吞并。</span>
+        </label>
+        <div class="merge-files" id="mergeFiles"></div>
+        <details class="paste-box"><summary>或者粘贴 CSV 文本</summary>
+          <textarea id="pasteArea" class="input" rows="6" placeholder="把微信账单 CSV 内容粘贴到这里…"></textarea>
+          <button class="btn" id="btnParsePaste">解析文本</button>
+        </details>
+        <div class="howto"><b>账单怎么导出？</b>微信 → 我 → 服务 → 钱包 → 账单 → 右上角「常见问题」→ 下载账单 → 用于个人对账 → 选时间并填邮箱，收到后解压（密码在微信消息里）。</div>
+      </div>
+
+      <div class="panel hidden" id="importResult">
+        <div class="panel-head"><h2>解析结果</h2><button class="ghost-btn small" id="btnCancelImport">重新选择</button></div>
+        <div class="import-stats" id="importStats"></div>
+        <div class="import-actions">
+          <button class="btn primary grow" id="btnDoImportTop">确认导入</button>
+          <button class="ghost-btn" id="btnCancelImportTop">重新选择</button>
+        </div>
+        <p class="tip" id="previewTip" style="margin:10px 0"></p>
+        <div class="table-wrap scroll-y"><table class="preview-table"><thead><tr><th>日期</th><th>收支</th><th>分类</th><th>备注</th><th class="ta-r">金额</th></tr></thead><tbody id="previewBody"></tbody></table></div>
+        <div class="row-end"><button class="btn primary" id="btnDoImport">确认导入</button></div>
+      </div>
+    </section>
+
+    <!-- 设置 -->
+    <section class="view hidden" id="view-settings">
+      <div class="panel"><div class="panel-head"><h2>每月预算</h2></div>
+        <p class="tip" id="budgetHint">设置当月支出预算，账单页会显示使用进度；填 0 表示不限。</p>
+        <div class="form-row"><input type="number" min="0" step="100" id="budgetInput" class="input" placeholder="例如 3000"><button class="btn" id="btnSaveBudget">保存</button></div>
+      </div>
+
+      <div class="panel"><div class="panel-head"><h2>账户与余额</h2><button class="ghost-btn small" id="btnAddAccount">＋ 新增账户</button></div>
+        <p class="tip">余额按全部记录（收入－支出＋转入－转出）自动计算，可用于对账。</p>
+        <div id="accountList" class="account-list"></div>
+        <div class="form-row" style="margin-top:14px"><span class="tip">记账默认账户</span><select id="defaultAccountSel" class="input"></select></div>
+      </div>
+
+      <div class="panel"><div class="panel-head"><h2>分类管理</h2>
+          <div class="seg" id="catTypeSeg"><button class="active" data-ctype="expense">支出</button><button data-ctype="income">收入</button></div>
+        </div>
+        <p class="tip">可改名、换图标（填一个 emoji）、调整顺序，多余的分类可直接删除；已有记录会自动归到「其他」。</p>
+        <div id="catEditList" class="cat-edit-list"></div>
+        <div class="form-row" style="margin-top:12px"><button class="btn" id="btnAddCat">＋ 新增分类</button><button class="ghost-btn" id="btnResetCats">恢复默认分类</button></div>
+      </div>
+
+      <div class="panel"><div class="panel-head"><h2>外观</h2></div>
+        <div class="form-row"><button class="btn" id="btnTheme2">切换深色 / 浅色</button><span class="tip" id="themeText"></span></div>
+      </div>
+
+      <div class="panel"><div class="panel-head"><h2>备份与恢复</h2></div>
+        <div class="btn-grid">
+          <button class="btn primary" id="btnExportXlsx">导出 Excel 分析报告（多 Sheet）</button>
+          <button class="btn" id="btnExportCsv">导出 CSV（全部流水）</button>
+          <button class="btn" id="btnExportJson">导出 JSON 备份</button>
+          <button class="btn" id="btnImportJson">从 JSON 备份恢复</button>
+          <button class="btn" id="btnSeed">载入示例数据</button>
+        </div>
+        <input type="file" id="jsonInput" accept=".json" hidden>
+        <p class="tip">浏览器清除站点数据会删除记录，建议定期导出备份。</p>
+      </div>
+
+      <div class="panel danger"><div class="panel-head"><h2>危险操作</h2></div>
+        <div class="form-row"><button class="btn danger-btn" id="btnClearAll">清空全部记录</button><span class="tip" id="storageInfo"></span></div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottomnav">
+    <button class="active" data-nav="home"><span>🧾</span>账单</button>
+    <button data-nav="stats"><span>📊</span>统计</button>
+    <button data-nav="detail"><span>📋</span>明细</button>
+    <button data-nav="import"><span>📥</span>导入</button>
+    <button data-nav="settings"><span>⚙️</span>设置</button>
+  </nav>
+  <button class="fab" id="fabAdd" title="记一笔">＋</button>
+</div>
+
+<dialog id="editorDialog" class="modal">
+  <form method="dialog" class="modal-body" id="editorForm">
+    <div class="modal-head"><h2 id="editorTitle">记一笔</h2><button type="button" class="icon-btn" id="btnCloseEditor">✕</button></div>
+    <div class="seg big" id="editorTypeSeg">
+      <button type="button" class="active" data-etype="expense">支出</button>
+      <button type="button" data-etype="income">收入</button>
+      <button type="button" data-etype="transfer">转账</button>
+    </div>
+
+    <div class="amount-row"><span>¥</span><input type="text" id="editAmount" class="amount-input" placeholder="0.00" inputmode="none" autocomplete="off" required></div>
+
+    <div class="editor-split">
+      <div id="catSection">
+        <label class="field-label">分类</label>
+        <div class="cat-grid" id="editCats"></div>
+      </div>
+      <div class="keypad" id="keypad">
+        <button type="button" data-key="1">1</button><button type="button" data-key="2">2</button><button type="button" data-key="3">3</button>
+        <button type="button" data-key="4">4</button><button type="button" data-key="5">5</button><button type="button" data-key="6">6</button>
+        <button type="button" data-key="7">7</button><button type="button" data-key="8">8</button><button type="button" data-key="9">9</button>
+        <button type="button" data-key=".">.</button><button type="button" data-key="0">0</button><button type="button" data-key="del">⌫</button>
+      </div>
+    </div>
+
+    <div id="accountSection">
+      <label class="field-label">账户</label>
+      <select id="editAccount" class="input"></select>
+    </div>
+
+    <div id="transferSection" class="two-col hidden" style="margin-bottom:14px">
+      <div><label class="field-label">转出账户</label><select id="editFrom" class="input"></select></div>
+      <div><label class="field-label">转入账户</label><select id="editTo" class="input"></select></div>
+    </div>
+
+    <div class="two-col" style="margin-top:14px">
+      <div><label class="field-label">日期</label><input type="date" id="editDate" class="input" required></div>
+      <div><label class="field-label">备注</label><input type="text" id="editNote" class="input" maxlength="30" placeholder="选填"></div>
+    </div>
+    <div class="date-quick"><button type="button" class="ghost-btn small" data-day="0">今天</button><button type="button" class="ghost-btn small" data-day="1">昨天</button><button type="button" class="ghost-btn small" data-day="2">前天</button></div>
+
+    <div class="modal-actions"><button type="button" class="btn danger-btn hidden" id="btnDeleteRec">删除</button><button type="submit" class="btn primary grow" id="btnSaveRec">保存</button></div>
+  </form>
+</dialog>
+
+<dialog id="confirmDialog" class="modal small-modal"><div class="modal-body"><h2 id="confirmTitle">确认</h2><p id="confirmText"></p><div class="modal-actions"><button class="btn" id="btnConfirmNo">取消</button><button class="btn danger-btn" id="btnConfirmYes">确定</button></div></div></dialog>
+<div id="toast" class="toast"></div>
+
+<script src="js/data.js?v=20261103a"></script>
+<script src="js/inflate.js?v=20261103b"></script>
+<script src="js/classify.js?v=20261108i"></script>
+<script src="vendor/pdf.min.js?v=20261108a"></script>
+<script src="js/pdf.js?v=20261108i"></script>
+<script src="js/parser.js?v=20261108k"></script>
+<script src="js/charts.js?v=20261029g"></script>
+<script src="js/xlsx-write.js?v=20261030a"></script>
+<script src="js/app.js?v=20261108p"></script>
+</body>
+</html>

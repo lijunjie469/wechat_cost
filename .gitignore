@@ -1,0 +1,32 @@
+# ---------- 依赖 / 构建产物 ----------
+node_modules/
+android/.gradle/
+android/build/
+android/app/build/
+android/.idea/
+android/.cxx/
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# ---------- 本机配置与签名（含密钥密码，绝不提交） ----------
+android/local.properties
+android/signing.properties
+android/app/keystore.jks
+*.jks
+*.keystore
+
+# ---------- 个人数据 / 工作产物 ----------
+# .workbuddy 里有真实银行流水与账单样本，含个人消费记录
+.workbuddy/
+*.log
+gradle-build*.log
+
+# ---------- 生成的文件 ----------
+preview-qr.png
+
+# ---------- 系统文件 ----------
+.DS_Store
+Thumbs.db
+desktop.ini

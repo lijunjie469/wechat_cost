@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>记账本小程序 · 界面预览</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#101418; min-height:100vh; padding:48px 24px;
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  h1 { color:#fff; font-size:26px; margin-bottom:8px; }
+  .sub { color:#7d8590; font-size:14px; margin-bottom:40px; }
+  .row { display:flex; gap:36px; flex-wrap:wrap; justify-content:center; }
+  .phone {
+    width:330px; background:#F6F7F9; border-radius:40px; overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.5); border:8px solid #1d2229;
+  }
+  .phead { background:#07C160; color:#fff; text-align:center; padding:14px 0; font-size:15px; font-weight:600; }
+  .pbody { height:600px; overflow:hidden; position:relative; font-size:13px; color:#1A1A1A; }
+  .pfoot { display:flex; background:#fff; border-top:1px solid #f0f1f3; }
+  .pfoot div { flex:1; text-align:center; padding:10px 0; font-size:13px; color:#9AA0A6; }
+  .pfoot .on { color:#07C160; font-weight:600; }
+
+  .monthbar { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; }
+  .mnav { width:26px; height:26px; line-height:24px; text-align:center; font-size:20px; color:#07C160; background:#fff; border-radius:50%; }
+  .mtitle { font-size:16px; font-weight:600; }
+  .summary { display:flex; background:#fff; margin:0 12px 6px; border-radius:12px; padding:16px 0; }
+  .sitem { flex:1; text-align:center; }
+  .slabel { color:#9AA0A6; font-size:11px; margin-bottom:4px; }
+  .sval { font-size:16px; font-weight:700; }
+  .sval.in { color:#E64340; }
+  .dayhead { display:flex; align-items:baseline; padding:12px 18px 6px; }
+  .dlabel { font-weight:600; margin-right:8px; }
+  .ddate { color:#9AA0A6; font-size:11px; flex:1; }
+  .dsum { color:#9AA0A6; font-size:10px; }
+  .card { background:#fff; margin:0 12px 8px; border-radius:12px; overflow:hidden; }
+  .ritem { display:flex; align-items:center; padding:11px 16px; }
+  .ritem.bt { border-top:1px solid #F0F1F3; }
+  .ricon { width:34px; height:34px; background:#F6F7F9; border-radius:50%; text-align:center; line-height:34px; font-size:17px; margin-right:10px; }
+  .rmain { flex:1; min-width:0; }
+  .rcat { font-size:13px; }
+  .rnote { color:#9AA0A6; font-size:10px; margin-top:1px; }
+  .ramt { font-size:15px; font-weight:600; }
+  .ramt.income { color:#E64340; }
+  .fab { position:absolute; right:18px; bottom:22px; width:48px; height:48px; border-radius:50%; background:#07C160; color:#fff; font-size:28px; line-height:46px; text-align:center; box-shadow:0 6px 16px rgba(7,193,96,.4); }
+
+  .toggle { display:flex; margin:12px; background:#fff; border-radius:10px; padding:4px; }
+  .tbtn { flex:1; text-align:center; padding:8px 0; border-radius:8px; color:#5A5E66; font-size:13px; }
+  .tbtn.on { background:#07C160; color:#fff; font-weight:600; }
+  .amount { text-align:center; padding:12px 0 14px; font-size:32px; font-weight:700; }
+  .cats { display:flex; flex-wrap:wrap; background:#fff; margin:0 12px; border-radius:12px; padding:8px 0; }
+  .cat { width:20%; text-align:center; padding:8px 0; }
+  .cicon { width:36px; height:36px; line-height:36px; margin:0 auto; background:#F6F7F9; border-radius:50%; font-size:18px; }
+  .cat.on .cicon { background:#07C160; }
+  .cname { font-size:10px; color:#5A5E66; margin-top:3px; }
+  .cat.on .cname { color:#07C160; font-weight:600; }
+  .meta { margin:8px 12px; background:#fff; border-radius:12px; padding:0 14px; }
+  .mrow { display:flex; align-items:center; padding:11px 0; }
+  .mrow.bt { border-top:1px solid #F0F1F3; }
+  .mlabel { width:50px; color:#5A5E66; font-size:12px; }
+  .mval { font-size:12px; }
+  .pad { position:absolute; left:0; right:0; bottom:0; background:#fff; display:flex; padding:6px; box-shadow:0 -1px 6px rgba(0,0,0,.05); }
+  .keys { flex:3; display:flex; flex-wrap:wrap; }
+  .key { width:33.33%; }
+  .kin { margin:3px; background:#F6F7F9; border-radius:7px; text-align:center; padding:9px 0; font-size:19px; }
+  .savecol { flex:1; display:flex; }
+  .savebtn { flex:1; margin:3px; background:#07C160; color:#fff; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:600; }
+
+  .panel { background:#fff; margin:0 12px 8px; border-radius:12px; padding:16px; text-align:center; }
+  .ptotal { font-size:19px; font-weight:700; }
+  .psub { color:#9AA0A6; font-size:11px; margin-top:4px; }
+  .piewrap { position:relative; width:150px; height:150px; margin:14px auto 0; }
+  .piecss { width:150px; height:150px; border-radius:50%;
+    background:conic-gradient(#FF8A65 0 46%, #4FC3F7 46% 69%, #BA68C8 69% 84%, #81C784 84% 93%, #FFD54F 93% 100%); }
+  .piehole { position:absolute; inset:29px; background:#fff; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .pclabel { color:#9AA0A6; font-size:11px; }
+  .pcval { font-size:15px; font-weight:700; margin-top:2px; }
+  .blist { background:#fff; margin:0 12px; border-radius:12px; padding:4px 14px; }
+  .brow { display:flex; align-items:center; padding:10px 0; }
+  .brow.bt { border-top:1px solid #F0F1F3; }
+  .bicon { width:30px; height:30px; background:#F6F7F9; border-radius:50%; text-align:center; line-height:30px; font-size:15px; margin-right:9px; }
+  .bmain { flex:1; min-width:0; margin-right:9px; }
+  .btop { display:flex; justify-content:space-between; margin-bottom:5px; }
+  .bname { font-size:12px; }
+  .bpct { color:#9AA0A6; font-size:10px; }
+  .bbar { height:6px; background:#F0F1F3; border-radius:3px; overflow:hidden; }
+  .bfill { height:6px; border-radius:3px; }
+  .bsum { font-size:13px; font-weight:600; }
+  .caption { color:#c9d1d9; font-size:14px; text-align:center; margin-top:18px; }
+  .cap-phone { display:flex; flex-direction:column; }
+</style>
+</head>
+<body>
+  <h1>记账本 · 微信小程序</h1>
+  <div class="sub">界面预览（静态模拟，实际以开发者工具运行效果为准）</div>
+  <div class="row">
+
+    <div class="cap-phone">
+      <div class="phone">
+        <div class="phead">账单</div>
+        <div class="pbody">
+          <div class="monthbar"><div class="mnav">‹</div><div class="mtitle">2026-10</div><div class="mnav">›</div></div>
+          <div class="summary">
+            <div class="sitem"><div class="slabel">支出</div><div class="sval">¥1,286.50</div></div>
+            <div class="sitem"><div class="slabel">收入</div><div class="sval in">¥12,000.00</div></div>
+            <div class="sitem"><div class="slabel">结余</div><div class="sval">¥10,713.50</div></div>
+          </div>
+          <div class="dayhead"><span class="dlabel">今天</span><span class="ddate">2026-10-22</span><span class="dsum">支 ¥47.50 · 收 ¥0.00</span></div>
+          <div class="card">
+            <div class="ritem"><div class="ricon">🍜</div><div class="rmain"><div class="rcat">餐饮</div><div class="rnote">午餐 牛肉面</div></div><div class="ramt">-35.50</div></div>
+            <div class="ritem bt"><div class="ricon">🚌</div><div class="rmain"><div class="rcat">交通</div><div class="rnote">地铁</div></div><div class="ramt">-12.00</div></div>
+          </div>
+          <div class="dayhead"><span class="dlabel">昨天</span><span class="ddate">2026-10-21</span><span class="dsum">支 ¥299.00 · 收 ¥12,000.00</span></div>
+          <div class="card">
+            <div class="ritem"><div class="ricon">💰</div><div class="rmain"><div class="rcat">工资</div><div class="rnote">10月工资</div></div><div class="ramt income">+12000.00</div></div>
+            <div class="ritem bt"><div class="ricon">🛍️</div><div class="rmain"><div class="rcat">购物</div><div class="rnote">蓝牙耳机</div></div><div class="ramt">-299.00</div></div>
+          </div>
+          <div class="fab">＋</div>
+        </div>
+        <div class="pfoot"><div class="on">账单</div><div>统计</div></div>
+      </div>
+      <div class="caption">账单首页：月度汇总 + 按日分组</div>
+    </div>
+
+    <div class="cap-phone">
+      <div class="phone">
+        <div class="phead">记一笔</div>
+        <div class="pbody">
+          <div class="toggle"><div class="tbtn on">支出</div><div class="tbtn">收入</div></div>
+          <div class="amount">¥ 35.50</div>
+          <div class="cats">
+            <div class="cat on"><div class="cicon">🍜</div><div class="cname">餐饮</div></div>
+            <div class="cat"><div class="cicon">🚌</div><div class="cname">交通</div></div>
+            <div class="cat"><div class="cicon">🛍️</div><div class="cname">购物</div></div>
+            <div class="cat"><div class="cicon">🎮</div><div class="cname">娱乐</div></div>
+            <div class="cat"><div class="cicon">🏠</div><div class="cname">住房</div></div>
+            <div class="cat"><div class="cicon">💊</div><div class="cname">医疗</div></div>
+            <div class="cat"><div class="cicon">📚</div><div class="cname">学习</div></div>
+            <div class="cat"><div class="cicon">📱</div><div class="cname">通讯</div></div>
+            <div class="cat"><div class="cicon">🧧</div><div class="cname">人情</div></div>
+            <div class="cat"><div class="cicon">📦</div><div class="cname">其他</div></div>
+          </div>
+          <div class="meta">
+            <div class="mrow"><div class="mlabel">备注</div><div class="mval">午餐 牛肉面</div></div>
+            <div class="mrow bt"><div class="mlabel">日期</div><div class="mval">2026-10-22 ›</div></div>
+          </div>
+          <div class="pad">
+            <div class="keys">
+              <div class="key"><div class="kin">1</div></div><div class="key"><div class="kin">2</div></div><div class="key"><div class="kin">3</div></div>
+              <div class="key"><div class="kin">4</div></div><div class="key"><div class="kin">5</div></div><div class="key"><div class="kin">6</div></div>
+              <div class="key"><div class="kin">7</div></div><div class="key"><div class="kin">8</div></div><div class="key"><div class="kin">9</div></div>
+              <div class="key"><div class="kin">.</div></div><div class="key"><div class="kin">0</div></div><div class="key"><div class="kin">⌫</div></div>
+            </div>
+            <div class="savecol"><div class="savebtn">保存</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="caption">记一笔：分类选择 + 数字键盘</div>
+    </div>
+
+    <div class="cap-phone">
+      <div class="phone">
+        <div class="phead">统计</div>
+        <div class="pbody">
+          <div class="monthbar"><div class="mnav">‹</div><div class="mtitle">2026-10</div><div class="mnav">›</div></div>
+          <div class="toggle"><div class="tbtn on">支出</div><div class="tbtn">收入</div></div>
+          <div class="panel">
+            <div class="ptotal">总支出 ¥1,286.50</div>
+            <div class="psub">共 12 笔 · 日均 ¥58.48</div>
+            <div class="piewrap">
+              <div class="piecss"></div>
+              <div class="piehole"><div class="pclabel">支出</div><div class="pcval">¥1,286.50</div></div>
+            </div>
+          </div>
+          <div class="blist">
+            <div class="brow"><div class="bicon">🍜</div><div class="bmain"><div class="btop"><span class="bname">餐饮</span><span class="bpct">46%</span></div><div class="bbar"><div class="bfill" style="width:100%;background:#FF8A65"></div></div></div><div class="bsum">¥592.00</div></div>
+            <div class="brow bt"><div class="bicon">🛍️</div><div class="bmain"><div class="btop"><span class="bname">购物</span><span class="bpct">23%</span></div><div class="bbar"><div class="bfill" style="width:50%;background:#4FC3F7"></div></div></div><div class="bsum">¥299.00</div></div>
+            <div class="brow bt"><div class="bicon">🏠</div><div class="bmain"><div class="btop"><span class="bname">住房</span><span class="bpct">16%</span></div><div class="bbar"><div class="bfill" style="width:34%;background:#BA68C8"></div></div></div><div class="bsum">¥200.00</div></div>
+            <div class="brow bt"><div class="bicon">🚌</div><div class="bmain"><div class="btop"><span class="bname">交通</span><span class="bpct">9%</span></div><div class="bbar"><div class="bfill" style="width:20%;background:#81C784"></div></div></div><div class="bsum">¥115.50</div></div>
+          </div>
+        </div>
+        <div class="pfoot"><div>账单</div><div class="on">统计</div></div>
+      </div>
+      <div class="caption">统计：分类占比环形图 + 排行</div>
+    </div>
+
+  </div>
+</body>
+</html>

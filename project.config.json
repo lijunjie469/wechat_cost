@@ -1,0 +1,28 @@
+{
+  "description": "记账本小程序：本地存储的个人记账工具",
+  "appid": "wx879a35e01192c181",
+  "compileType": "miniprogram",
+  "libVersion": "3.8.12",
+  "projectname": "wechat_cost",
+  "setting": {
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "urlCheck": false,
+    "enhance": true
+  },
+  "packOptions": {
+    "ignore": [
+      { "type": "folder", "value": ".workbuddy" },
+      { "type": "folder", "value": "web" },
+      { "type": "file", "value": "preview.html" },
+      { "type": "file", "value": "新功能预览.html" },
+      { "type": "file", "value": "README.md" },
+      { "type": "suffix", "value": ".md" },
+      { "type": "suffix", "value": ".png" },
+      { "type": "suffix", "value": ".xlsx" },
+      { "type": "suffix", "value": ".csv" },
+      { "type": "suffix", "value": ".env" }
+    ]
+  }
+}

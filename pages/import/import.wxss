@@ -1,0 +1,259 @@
+.page {
+  padding: 20rpx 24rpx 40rpx;
+  box-sizing: border-box;
+}
+
+.card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+/* 说明 */
+.htitle {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin-bottom: 14rpx;
+}
+.hline {
+  font-size: 25rpx;
+  color: #6B7280;
+  line-height: 1.75;
+}
+
+/* 按钮 */
+.btn {
+  height: 88rpx;
+  border-radius: 14rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  font-weight: 500;
+}
+.btn.primary {
+  background: #07C160;
+  color: #fff;
+}
+.btn.ghost {
+  background: #F1F5F2;
+  color: #07C160;
+  margin-top: 18rpx;
+}
+.btn-hover {
+  opacity: 0.85;
+}
+.filetip {
+  font-size: 24rpx;
+  color: #9AA0A6;
+  margin-top: 14rpx;
+  word-break: break-all;
+}
+.filesub {
+  font-size: 22rpx;
+  color: #9AA0A6;
+  margin-top: 12rpx;
+  line-height: 1.6;
+}
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #C4C8CC;
+  font-size: 24rpx;
+  margin: 24rpx 0 10rpx;
+}
+
+/* 粘贴框 */
+.ta {
+  width: 100%;
+  min-height: 220rpx;
+  background: #F7F8FA;
+  border-radius: 14rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  font-size: 24rpx;
+  color: #333;
+}
+
+/* 错误 */
+.err {
+  color: #E64340;
+  font-size: 26rpx;
+  background: #FFF1F0;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  white-space: pre-wrap;
+  line-height: 1.7;
+}
+
+/* 解析统计 */
+.stitle {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin-bottom: 18rpx;
+}
+.stat {
+  display: flex;
+  text-align: center;
+}
+.sitem {
+  flex: 1;
+}
+.snum {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #1A1A1A;
+}
+.snum.ok {
+  color: #07C160;
+}
+.slabel {
+  font-size: 23rpx;
+  color: #9AA0A6;
+  margin-top: 6rpx;
+}
+.skipnote {
+  font-size: 22rpx;
+  color: #9AA0A6;
+  margin-top: 18rpx;
+  line-height: 1.6;
+}
+
+/* 预览 */
+.prow {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+}
+.prow.bt {
+  border-top: 1rpx solid #F2F3F5;
+}
+.picon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background: #F4F6F8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  margin-right: 18rpx;
+}
+.pmain {
+  flex: 1;
+  min-width: 0;
+}
+.pcat {
+  font-size: 28rpx;
+  color: #1A1A1A;
+}
+.pnote {
+  font-size: 22rpx;
+  color: #9AA0A6;
+  margin-top: 4rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.pamt {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+.pamt.income {
+  color: #E64340;
+}
+
+/* 底部 */
+.bottompad {
+  height: 140rpx;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 18rpx 24rpx calc(18rpx + env(safe-area-inset-bottom));
+  background: #fff;
+  box-shadow: 0 -2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+.savebtn {
+  width: 100%;
+  height: 92rpx;
+  line-height: 92rpx;
+  border-radius: 14rpx;
+  background: #07C160;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 600;
+  border: none;
+}
+.savebtn[disabled] {
+  background: #A8E6C1;
+  color: #fff;
+}
+
+/* 合并多份账单 */
+.mergerow {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: #F7F8FA;
+  border-radius: 16rpx;
+}
+.mergemain {
+  flex: 1;
+  min-width: 0;
+}
+.mergetitle {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1F2328;
+}
+.mergesub {
+  font-size: 22rpx;
+  color: #9AA0A6;
+  line-height: 1.6;
+  margin-top: 6rpx;
+}
+.filechips {
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #F0F1F3;
+}
+.fctitle {
+  font-size: 24rpx;
+  color: #5A5E66;
+  margin-bottom: 12rpx;
+}
+.fcwrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+.fc {
+  max-width: 100%;
+  padding: 8rpx 18rpx;
+  border-radius: 999rpx;
+  background: #EEF7F1;
+  border: 1rpx solid #D5EBDE;
+  color: #0A7D43;
+  font-size: 22rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mergetip {
+  font-size: 22rpx;
+  color: #9AA0A6;
+  margin: 20rpx 0 12rpx;
+  line-height: 1.6;
+}

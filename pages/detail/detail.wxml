@@ -1,0 +1,51 @@
+<view class="filterbar">
+  <view class="frow">
+    <picker mode="date" value="{{from}}" bindchange="onFrom">
+      <view class="fcell {{from ? 'on' : ''}}">起 {{from || '不限'}}</view>
+    </picker>
+    <picker mode="date" value="{{to}}" bindchange="onTo">
+      <view class="fcell {{to ? 'on' : ''}}">止 {{to || '不限'}}</view>
+    </picker>
+  </view>
+  <view class="frow">
+    <picker range="{{typeOptions}}" value="{{typeIndex}}" bindchange="onType">
+      <view class="fcell">{{typeOptions[typeIndex]}}</view>
+    </picker>
+    <picker range="{{catOptions}}" value="{{catIndex}}" bindchange="onCat">
+      <view class="fcell">{{catOptions[catIndex]}}</view>
+    </picker>
+    <view class="freset" bindtap="reset">重置</view>
+  </view>
+  <view class="fsearch">
+    <input class="finput" value="{{q}}" placeholder="搜索备注 / 商家 / 金额" bindinput="onQ" confirm-type="search" />
+  </view>
+</view>
+
+<view class="sumbar">
+  <view class="sitem">共 <text class="cnum">{{total}}</text> 条</view>
+  <view class="sitem">支出 <text class="out">¥{{summary.expense}}</text></view>
+  <view class="sitem">收入 <text class="in">¥{{summary.income}}</text></view>
+  <view class="sitem">结余 <text>¥{{summary.balance}}</text></view>
+</view>
+
+<view wx:if="{{empty}}" class="empty">
+  <view class="eicon">🔍</view>
+  <view>没有符合条件的记录</view>
+  <view class="etip">试试放宽日期或清空关键词</view>
+</view>
+
+<view wx:else class="dlist">
+  <view class="drow" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="editRec" hover-class="drow-hover">
+    <view class="dicon">{{item.icon}}</view>
+    <view class="dmain">
+      <view class="dtop">
+        <text class="dnote">{{item.note}}</text>
+        <text class="damt {{item.type}}">{{item.sign}}{{item.amountText}}</text>
+      </view>
+      <view class="dsub">{{item.date}} · {{item.catName}}<text wx:if="{{item.accName}}"> · {{item.accName}}</text><text wx:if="{{item.party}}"> · {{item.party}}</text><text wx:if="{{item.source}}" class="dtag">{{item.source}}</text></view>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{hasMore}}" class="loadmore" bindtap="loadMore">加载更多（已显示 {{shown}} / {{total}}）</view>
+<view wx:elif="{{!empty}}" class="loadmore tip">已显示全部 {{total}} 条</view>

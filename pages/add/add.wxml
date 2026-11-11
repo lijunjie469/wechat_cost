@@ -1,0 +1,59 @@
+<view class="wrap">
+  <view class="toggle">
+    <view class="tbtn {{type === 'expense' ? 'on' : ''}}" data-t="expense" bindtap="switchType">支出</view>
+    <view class="tbtn {{type === 'income' ? 'on' : ''}}" data-t="income" bindtap="switchType">收入</view>
+  </view>
+
+  <view class="amount">¥ {{amountStr || '0.00'}}</view>
+
+  <view class="cats">
+    <view
+      wx:for="{{categories}}"
+      wx:key="id"
+      class="cat {{categoryId === item.id ? 'on' : ''}}"
+      data-id="{{item.id}}"
+      bindtap="pickCat"
+    >
+      <view class="cicon">{{item.icon}}</view>
+      <view class="cname">{{item.name}}</view>
+    </view>
+  </view>
+
+  <view class="meta">
+    <view class="mrow">
+      <view class="mlabel">备注</view>
+      <input class="minput" placeholder="写点什么…" value="{{note}}" bindinput="onNote" maxlength="30" />
+    </view>
+    <view class="mrow bt">
+      <view class="mlabel">账户</view>
+      <picker mode="selector" range="{{accountNames}}" value="{{accountIndex}}" bindchange="onAccount">
+        <view class="mval">{{accountNames[accountIndex]}} ›</view>
+      </picker>
+    </view>
+    <view class="mrow bt">
+      <view class="mlabel">日期</view>
+      <picker mode="date" value="{{date}}" bindchange="onDate">
+        <view class="mval">{{date}} ›</view>
+      </picker>
+    </view>
+  </view>
+
+  <view wx:if="{{id}}" class="del" bindtap="onDelete" hover-class="del-hover">删除这条记录</view>
+</view>
+
+<view class="pad">
+  <view class="keys">
+    <view
+      class="key"
+      wx:for="{{['1','2','3','4','5','6','7','8','9','.','0','back']}}"
+      wx:key="*this"
+      data-k="{{item}}"
+      bindtap="onKey"
+    >
+      <view class="kin" hover-class="kin-hover">{{item === 'back' ? '⌫' : item}}</view>
+    </view>
+  </view>
+  <view class="savecol">
+    <view class="savebtn" bindtap="save" hover-class="save-hover">保存</view>
+  </view>
+</view>
