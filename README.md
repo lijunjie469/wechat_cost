@@ -120,7 +120,7 @@
 
 **方式三：Android APK**
 
-- 从 [Releases](https://github.com/lijunjie469/wechat_cost/releases) 下载最新 `记账本-vX.Y.Z.apk` 直接安装（当前 **v1.1.5**）
+- 从 [Releases](https://github.com/lijunjie469/wechat_cost/releases) 下载最新 `jizhangben-vX.Y.Z.apk` 直接安装（当前 **v1.1.5**）
 
 - 本质是 WebView 外壳，内嵌 `android/app/src/main/assets/www`（由 `web/` 同步而来），通过 `https://app.local/` 拦截 assets 提供页面，规避 `file://` 的 localStorage 限制
 - 比小程序多一个能力：**能直接解析 PDF 账单**（内置 pdf.js legacy 版，约 1.5MB，小程序主包 2MB 放不下）
