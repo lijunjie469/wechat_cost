@@ -1,6 +1,20 @@
-# 记账本（微信小程序）
+# 记账本（微信小程序 / 网页 / Android 三端）
 
-一个零后端、纯本地存储的个人记账小程序，支持**导入微信支付账单**。
+一个**零后端、纯本地存储**的个人记账工具，支持**导入微信支付账单 / 支付宝账单 / 银行流水**。
+
+> 数据全部存在本机（`localStorage` / `wx.Storage`），**不联网、无账号、无云端**，导入的账单不会离开你的设备。
+>
+> 📦 **Android 安装包**：见 [Releases](https://github.com/lijunjie469/wechat_cost/releases) 下载最新 APK。
+
+## 三端能力对比
+
+| 能力 | 微信小程序 | 网页版 (`web/`) | Android APK |
+|---|:---:|:---:|:---:|
+| 记账 / 统计 / 预算 / 账户 / 日历 / 周期账单 | ✅ | ✅ | ✅ |
+| 导入 CSV / XLSX / DOCX 账单 | ✅ | ✅ | ✅ |
+| 导入 **PDF** 银行流水 | ❌（主包 2MB 放不下 pdf.js） | ✅ | ✅ |
+| 数据存储位置 | `wx.Storage` | 浏览器 `localStorage` | WebView `localStorage` |
+| 运行方式 | 微信内 / 开发者工具 | 任何浏览器打开 `web/index.html` | 安装 APK，离线可用 |
 
 ## 功能
 
@@ -104,7 +118,9 @@
 
 **方式二**：注册小程序拿到真实 AppID，填进 `project.config.json` 的 `appid`，即可真机预览
 
-**方式三：Android APK**（`记账本-v1.0.4.apk`）
+**方式三：Android APK**
+
+- 从 [Releases](https://github.com/lijunjie469/wechat_cost/releases) 下载最新 `记账本-vX.Y.Z.apk` 直接安装（当前 **v1.1.5**）
 
 - 本质是 WebView 外壳，内嵌 `android/app/src/main/assets/www`（由 `web/` 同步而来），通过 `https://app.local/` 拦截 assets 提供页面，规避 `file://` 的 localStorage 限制
 - 比小程序多一个能力：**能直接解析 PDF 账单**（内置 pdf.js legacy 版，约 1.5MB，小程序主包 2MB 放不下）
@@ -149,7 +165,9 @@ wechat_cost/
 │   ├── billParser.js              # 账单解析（CSV / 二维表 → 记录，含关键词归类；分隔符自适应）
 │   ├── docx.js                    # 极简 docx 读取（解压后解析 word/document.xml 的表格）
 │   └── xlsx.js                    # 极简 xlsx 读取（解压后解析 sheet XML，无第三方依赖）
-└── web/                           # 浏览器版（独立实现，不含周期账单/日历/趋势）
+├── web/                           # 浏览器版（独立实现，支持 PDF，可离线打开 index.html）
+├── android/                       # Android WebView 外壳（assets/www 由 web/ 同步而来）
+└── preview.html                   # 早期静态预览页
 ```
 
 ## 数据说明
